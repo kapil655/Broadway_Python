@@ -1,0 +1,5 @@
+local
+global
+
+ssh-kwygen
+pass=Kapil@123
