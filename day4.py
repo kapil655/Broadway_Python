@@ -19,26 +19,27 @@ data1=["kapil","dev"]
 data1.append("joshi")
 data1.append("mahendranagar")
 data1.append("kapil")
-print("append...................",data1)
+print(isinstance(data1,str))
+print("append.....................",data1)
 
 #insert
 data=[1,2,3,4,5]
 data.insert(0,90)
-print("insert...................",data)
+print("insert.....................",data)
 data.insert(100,500)
-print("insert...................",data)
+print("insert......................",data)
 
 #extend
 a = [1, 2, 3]
 b = [4, 5, 6]
 
 a.extend(b)
-print("extend.......................", a)
+print("extend.....................", a)
 
 print(a)
 
 #concat(+)
-print("concat.................",a+b)
+print("concat.....................",a+b)
 
 
 #del,remove,pop,clear
@@ -47,10 +48,10 @@ del data[0]
 print("del.....................",data)
 
 data.remove(6)
-print("Remove.................",data)
+print("Remove.....................",data)
 
 data.pop(3)
-print("pop ..............",data)
+print("pop .....................",data)
 
 
 

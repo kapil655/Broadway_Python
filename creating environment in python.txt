@@ -1,5 +1,0 @@
-creating environment in python
-python -m venv (foldername)
->broadway\Scripts\activate:-activating scipts
-deactivate:-for stepback
-->flake8 -> for checking the error in code 

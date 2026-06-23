@@ -16,7 +16,7 @@ def add1():
     return 1,"hello",105,'c',[1,2,3,5]
 
 
-
+#default agument
 def area(r,pie=3.14):
     return pie * r*r
 
@@ -26,11 +26,11 @@ print(area(7,4))
 def add_no(data):
         global sum
         sum=0
-    for i in data:
-    sum= sum+i
+        for i in data:
+            sum= sum+i
         
-        return data
+            return data
     
 
 print(add_no([1,2,3,4,5]))
-prrint(sum)
+print(sum)

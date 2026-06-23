@@ -1,5 +1,1 @@
-local
-global
-
-ssh-kwygen
-pass=Kapil@123
+git@github.com:sudan45/python-june-1.git
