@@ -40,8 +40,9 @@ add_positive(1,2,3,4,5,6,-8,-6)
 
 
 def info (**args):
-    return len(args)
     print(args)
+    return len(args)
+    
 
 info(name="kapil",greet="hello",age=23,roll=19)
 info(name="kapil",greet="hello")
