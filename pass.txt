@@ -1,0 +1,2 @@
+ssh-kwygen
+pass=Kapil@123
