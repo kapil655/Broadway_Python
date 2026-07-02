@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind CSS Demo</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="max-w-6xl mx-auto p-6">
+
+        <!-- Heading -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-blue-600">
+                Welcome to Tailwind CSS
+            </h1>
+            <p class="text-gray-600 mt-3">
+                Build modern and responsive websites quickly using utility classes.
+            </p>
+        </div>
+
+        <!-- Image -->
+        <div class="mb-10">
+            <img
+                src="https://picsum.photos/1000/350"
+                alt="Sample Image"
+                class="rounded-xl shadow-lg w-full">
+        </div>
+
+        <!-- Login Form -->
+        <div class="flex justify-center mb-12">
+
+            <div class="bg-white p-8 rounded-xl shadow-xl w-96">
+
+                <h2 class="text-3xl font-bold text-center mb-6">
+                    Login
+                </h2>
+
+                <form>
+
+                    <div class="mb-4">
+                        <label class="block mb-2 font-semibold">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block mb-2 font-semibold">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            placeholder="Enter your password"
+                            class="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div class="flex justify-between items-center mb-5">
+
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox">
+                            Remember Me
+                        </label>
+
+                        <a href="#" class="text-blue-500 hover:underline">
+                            Forgot Password?
+                        </a>
+
+                    </div>
+
+                    <button
+                        class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
+                        Login
+                    </button>
+
+                    <p class="text-center mt-5">
+                        Don't have an account?
+                        <a href="#" class="text-blue-500 hover:underline">
+                            Register
+                        </a>
+                    </p>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- Table -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">
+                Student Information
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white shadow rounded-lg">
+
+                    <thead class="bg-blue-600 text-white">
+                        <tr>
+                            <th class="py-3 px-4">ID</th>
+                            <th class="py-3 px-4">Name</th>
+                            <th class="py-3 px-4">Course</th>
+                            <th class="py-3 px-4">Semester</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr class="border-b hover:bg-gray-100">
+                            <td class="py-3 px-4">1</td>
+                            <td class="py-3 px-4">Ram Sharma</td>
+                            <td class="py-3 px-4">BCA</td>
+                            <td class="py-3 px-4">5th</td>
+                        </tr>
+
+                        <tr class="border-b hover:bg-gray-100">
+                            <td class="py-3 px-4">2</td>
+                            <td class="py-3 px-4">Sita Karki</td>
+                            <td class="py-3 px-4">BIM</td>
+                            <td class="py-3 px-4">4th</td>
+                        </tr>
+
+                        <tr class="border-b hover:bg-gray-100">
+                            <td class="py-3 px-4">3</td>
+                            <td class="py-3 px-4">Hari Joshi</td>
+                            <td class="py-3 px-4">CSIT</td>
+                            <td class="py-3 px-4">6th</td>
+                        </tr>
+
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-3 px-4">4</td>
+                            <td class="py-3 px-4">Gita Rai</td>
+                            <td class="py-3 px-4">BBS</td>
+                            <td class="py-3 px-4">3rd</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-xl font-bold mb-2">HTML</h3>
+                <p class="text-gray-600">
+                    HTML provides the structure of a webpage.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-xl font-bold mb-2">CSS</h3>
+                <p class="text-gray-600">
+                    CSS is used to style and design websites.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-xl font-bold mb-2">Tailwind CSS</h3>
+                <p class="text-gray-600">
+                    Tailwind CSS uses utility classes to build responsive interfaces.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white text-center py-5 rounded-lg">
+            <p>© 2026 Tailwind CSS Practice Page | Designed by Your Name</p>
+        </footer>
+
+    </div>
+
+</body>
+<script>
+    
+
+
+</script>
+</html>
