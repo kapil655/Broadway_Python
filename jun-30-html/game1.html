@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Number Game</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            background: #f5f5f5;
+        }
+
+        #message {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            height: 45px;
+            width: 200px;
+            border-radius: 25px;
+            border: 2px solid #ccc;
+            padding: 0 15px;
+            outline: none;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        button {
+            height: 40px;
+            width: 120px;
+            border-radius: 25px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <span id="message">Guess a num between 0 - 9</span>
+
+    <input type="number" id="guess_number" placeholder="Enter number">
+
+    <button onclick="checknum()">Check</button>
+
+    <script>
+        
+        let num = Math.floor(Math.random() * 10);
+
+        console.log(num)
+
+        console.log("Secret number (for testing):", num);
+
+        function checknum() {
+
+            let guessed = Number(document.getElementById("guess_number").value);
+
+            let message = document.getElementById("message");
+
+            if (guessed == ''){
+                document.getElementById("message").innerHTML="enter a num"
+            }
+
+            if (guessed > num) {
+                message.innerHTML = " Too high! Try again.";
+            }
+            else if (guessed < num) {
+                message.innerHTML = " Too low! Try again.";
+            }
+            else if(guessed == num ) {
+                message.innerHTML = " Correct! You guessed it!";
+                
+                
+                num = Math.floor(Math.random() * 10);
+                console.log("New number generated:", num);
+            }
+          
+        }
+    </script>
+
+</body>
+</html>
