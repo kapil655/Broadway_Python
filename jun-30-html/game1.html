@@ -3,103 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess The Number Game</title>
-
+    <title>Document</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+        
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
 
-        body {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 20px;
-            background: #f5f5f5;
-        }
+.check{
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 300px;
+    text-align: center;
+}
 
-        #message {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
+input[type="number"]{
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
 
-        input {
-            height: 45px;
-            width: 200px;
-            border-radius: 25px;
-            border: 2px solid #ccc;
-            padding: 0 15px;
-            outline: none;
-            text-align: center;
-            font-size: 16px;
-        }
+input[type="button"]{
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
-        button {
-            height: 40px;
-            width: 120px;
-            border-radius: 25px;
-            border: none;
-            background: #4CAF50;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+input[type="button"]:hover{
+    background: #45a049;
+}
 
-        button:hover {
-            background: #45a049;
-        }
+#ans{
+    margin-top: 15px;
+    font-weight: bold;
+}
+</style>
     </style>
 </head>
-
 <body>
+   <div class="check">
+     <label for="guessed_num">Enter 1<sup>st</sup> number </label><br>
 
-    <span id="message">Guess a num between 0 - 9</span>
+    <input type="number" id="guessed_num"> <br>
 
-    <input type="number" id="guess_number" placeholder="Enter number">
+    <br><br>
 
-    <button onclick="checknum()">Check</button>
+    <label for="random_num">Random num:</label><br>
 
-    <script>
+    <input type="number" id="random_num" >
+
+    <input type="button" value="submit" onclick="checknum()">
+    <br><br><br>
+
+     <p id="ans"></p>
+   </div>
+    
+   
+
+
+
+ <script>
+let random_num = Math.floor(Math.random() * 10);
+console.log( random_num);
+let vinal= document.getElementById("ans");
+
+function checknum(){
+
+    let guessed_num = document.getElementById("guessed_num").value;
+
+    if(guessed_num === ""){
+        document.getElementById("ans").innerHTML = "Input invalid";
+        return;
+    }
+
+    guessed_num = Number(guessed_num);
+
+    if(guessed_num > random_num){
+        document.getElementById("ans").innerHTML = "Guessed number is greater than random number";
+    }
+    else if(guessed_num < random_num){
+        document.getElementById("ans").innerHTML = "Guessed number is less than random number";
+    }
+    else if(guessed_num == random_num){
+        document.getElementById("random_num").value=random_num
+        document.getElementById("ans").innerHTML = " Congratulations! You guessed it right.";
+
+    
+        random_num = Math.floor(Math.random() * 10);
+        console.log("New Random:", random_num);
+
         
-        let num = Math.floor(Math.random() * 10);
-
-        console.log(num)
-
-        console.log("Secret number (for testing):", num);
-
-        function checknum() {
-
-            let guessed = Number(document.getElementById("guess_number").value);
-
-            let message = document.getElementById("message");
-
-            if (guessed == ''){
-                document.getElementById("message").innerHTML="enter a num"
-            }
-
-            if (guessed > num) {
-                message.innerHTML = " Too high! Try again.";
-            }
-            else if (guessed < num) {
-                message.innerHTML = " Too low! Try again.";
-            }
-            else if(guessed == num ) {
-                message.innerHTML = " Correct! You guessed it!";
-                
-                
-                num = Math.floor(Math.random() * 10);
-                console.log("New number generated:", num);
-            }
-          
-        }
-    </script>
-
+       
+    }
+    else if(final =="Congratulations! You guessed it right."){
+        document.getElementById("ans").innerHTML="enter number only "
+        document.getElementById("random_num").innerHTML="random number is"+guessed_num;
+    }
+    
+}
+</script>
 </body>
 </html>
