@@ -1,3 +1,5 @@
+env/
 python_broadway/
+django-5/
 __pycache__/
 *.pyc
