@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Counter App</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+}
+
+.container{
+    background:white;
+    padding:40px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 15px 35px rgba(0,0,0,.2);
+    width:350px;
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+#count{
+    font-size:70px;
+    font-weight:bold;
+    color:#333;
+    display:block;
+    margin-bottom:25px;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+    color:white;
+}
+
+#increase{
+    background:#28a745;
+}
+
+#decrease{
+    background:#dc3545;
+}
+
+#reset{
+    background:#007bff;
+}
+
+button:hover{
+    transform:translateY(-3px);
+}
+
+button:active{
+    transform:scale(.95);
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>Counter App</h1>
+
+    <span id="count">0</span>
+
+    <div class="buttons">
+        <button id="decrease">- Decrease</button>
+        <button id="reset">Reset</button>
+        <button id="increase">+ Increase</button>
+    </div>
+</div>
+
+<script>
+
+let count = 0;
+
+const countDisplay = document.getElementById("count");
+const increaseBtn = document.getElementById("increase");
+const decreaseBtn = document.getElementById("decrease");
+const resetBtn = document.getElementById("reset");
+
+function updateCount(){
+    countDisplay.textContent = count;
+
+    if(count > 0){
+        countDisplay.style.color = "green";
+    }
+    else if(count < 0){
+        countDisplay.style.color = "red";
+    }
+    else{
+        countDisplay.style.color = "black";
+    }
+}
+
+increaseBtn.addEventListener("click", () => {
+    count++;
+    updateCount();
+});
+
+decreaseBtn.addEventListener("click", () => {
+    count--;
+    updateCount();
+});
+
+resetBtn.addEventListener("click", () => {
+    count = 0;
+    updateCount();
+});
+
+</script>
+
+</body>
+</html>

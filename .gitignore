@@ -1,1 +1,3 @@
-pass.txt
+python_broadway/
+__pycache__/
+*.pyc

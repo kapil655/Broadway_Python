@@ -47,6 +47,11 @@ input[type="button"]{
 input[type="button"]:hover{
     background: #45a049;
 }
+#random_num{
+    height:15px;
+    width:30px;
+
+}
 
 #ans{
     margin-top: 15px;
@@ -57,7 +62,7 @@ input[type="button"]:hover{
 </head>
 <body>
    <div class="check">
-     <label for="guessed_num">Enter 1<sup>st</sup> number </label><br>
+     <label for="guessed_num">Enter guessed number number </label><br>
 
     <input type="number" id="guessed_num"> <br>
 
@@ -78,7 +83,7 @@ input[type="button"]:hover{
 
 
  <script>
-let random_num = Math.floor(Math.random() * 10);
+let random_num = Math.floor(Math.random()*10);
 console.log( random_num);
 let vinal= document.getElementById("ans");
 
@@ -104,8 +109,7 @@ function checknum(){
         document.getElementById("ans").innerHTML = " Congratulations! You guessed it right.";
 
     
-        random_num = Math.floor(Math.random() * 10);
-        console.log("New Random:", random_num);
+        
 
         
        
@@ -113,6 +117,12 @@ function checknum(){
     else if(final =="Congratulations! You guessed it right."){
         document.getElementById("ans").innerHTML="enter number only "
         document.getElementById("random_num").innerHTML="random number is"+guessed_num;
+        document.getElementById("ans")=" ";
+        document.getElementById("random_num")=" ";
+
+        random_num = Math.floor(Math.random() * 10);
+        console.log("New Random:", random_num);
+
     }
     
 }
