@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Quiz Game</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f7fb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-box {
+            max-width: 600px;
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .word {
+            font-size: 40px;
+            letter-spacing: 15px;
+            font-weight: bold;
+        }
+
+        .letter-btn {
+            width: 45px;
+            height: 45px;
+            margin: 5px;
+            font-weight: bold;
+        }
+
+        #hangman {
+            font-size: 80px;
+        }
+
+        .status {
+            font-size: 20px;
+        }
+
+        .question-box {
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .answer-input {
+            max-width: 300px;
+            margin: 15px auto;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="card shadow-lg p-4 game-box mx-auto text-center">
+
+        <h1 class="mb-3 text-primary">🎮 Hangman Quiz</h1>
+
+        <div id="hangman">🙂</div>
+
+        <p class="fs-5">
+            Attempts Left:
+            <span id="attempts" class="fw-bold text-danger">6</span>
+        </p>
+
+        <!-- Question Display -->
+        <div id="questionDisplay" class="question-box">
+            <strong>Question:</strong> <span id="questionText">Loading...</span>
+        </div>
+
+        <!-- Answer Display (Word with blanks) -->
+        <div id="word" class="word mb-4"></div>
+
+        <!-- Letter Buttons -->
+        <div id="letters" class="mb-3"></div>
+
+        <!-- OR - Typed Answer Input -->
+        <div class="answer-input">
+            <input type="text" id="answerInput" class="form-control" 
+                   placeholder="Type your answer..." maxlength="20">
+            <button class="btn btn-primary mt-2" onclick="guessWholeWord()">
+                Submit Answer
+            </button>
+        </div>
+
+        <p id="message" class="status fw-bold"></p>
+
+        <button class="btn btn-success mt-3" onclick="restartGame()">
+            Restart Game
+        </button>
+
+        <button class="btn btn-secondary mt-2" onclick="toggleInputMode()">
+            Switch to Letter Mode
+        </button>
+
+    </div>
+</div>
+
+
+<script>
+
+// Quiz Data: Question and Answer pairs
+const quizQuestions = [
+    { question: "What is the capital of France?", answer: "paris" },
+    { question: "What planet is known as the Red Planet?", answer: "mars" },
+    { question: "What is the largest ocean on Earth?", answer: "pacific" },
+    { question: "Who wrote 'Romeo and Juliet'?", answer: "shakespeare" },
+    { question: "What is the chemical symbol for water?", answer: "h2o" },
+    { question: "What year did World War II end?", answer: "1945" },
+    { question: "What is the fastest land animal?", answer: "cheetah" },
+    { question: "What is the square root of 144?", answer: "12" }
+];
+
+let currentQuestion;
+let selectedAnswer;
+let guessedLetters;
+let wrongGuesses;
+let maxAttempts = 6;
+let inputMode = 'word'; // 'word' for whole word input, 'letter' for letter-by-letter
+
+function startGame() {
+    // Select random question
+    currentQuestion = quizQuestions[Math.floor(Math.random() * quizQuestions.length)];
+    selectedAnswer = currentQuestion.answer.toLowerCase();
+    guessedLetters = [];
+    wrongGuesses = 0;
+
+    // Display question
+    document.getElementById("questionText").textContent = currentQuestion.question;
+    document.getElementById("message").innerHTML = "";
+    document.getElementById("answerInput").value = "";
+
+    createKeyboard();
+    updateGame();
+}
+
+function updateGame() {
+    let displayWord = "";
+    let allGuessed = true;
+
+    // Check if all letters in answer are guessed (for letter mode)
+    for (let letter of selectedAnswer) {
+        if (letter === ' ') {
+            displayWord += "  "; // Preserve spaces
+        } else if (guessedLetters.includes(letter)) {
+            displayWord += letter.toUpperCase() + " ";
+        } else {
+            displayWord += "_ ";
+            allGuessed = false;
+        }
+    }
+
+    document.getElementById("word").innerHTML = displayWord;
+    document.getElementById("attempts").innerHTML = maxAttempts - wrongGuesses;
+
+    // Update hangman face
+    let faces = ["🙂", "😐", "😕", "😟", "😨", "😰", "💀"];
+    document.getElementById("hangman").innerHTML = faces[wrongGuesses];
+
+    // Check win condition
+    if (allGuessed) {
+        document.getElementById("message").innerHTML = "🎉 You Win!";
+        disableButtons();
+        document.getElementById("answerInput").disabled = true;
+    }
+
+    // Check lose condition
+    if (wrongGuesses >= maxAttempts) {
+        document.getElementById("word").innerHTML = selectedAnswer.toUpperCase();
+        document.getElementById("message").innerHTML = "😢 Game Over! The answer was: " + selectedAnswer;
+        disableButtons();
+        document.getElementById("answerInput").disabled = true;
+    }
+}
+
+function createKeyboard() {
+    const lettersDiv = document.getElementById("letters");
+    lettersDiv.innerHTML = "";
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+    alphabet.split("").forEach(letter => {
+        let button = document.createElement("button");
+        button.innerHTML = letter.toUpperCase();
+        button.className = "btn btn-outline-primary letter-btn";
+        button.onclick = function() {
+            guessLetter(letter, button);
+        };
+        lettersDiv.appendChild(button);
+    });
+
+    // Show/hide based on mode
+    document.getElementById("letters").style.display = (inputMode === 'letter') ? 'block' : 'none';
+    document.querySelector('.answer-input').style.display = (inputMode === 'word') ? 'block' : 'none';
+}
+
+function guessLetter(letter, button) {
+    button.disabled = true;
+
+    if (!selectedAnswer.includes(letter)) {
+        wrongGuesses++;
+    } else {
+        guessedLetters.push(letter);
+    }
+
+    updateGame();
+}
+
+// New function: Guess the whole word
+function guessWholeWord() {
+    const input = document.getElementById("answerInput");
+    const guess = input.value.trim().toLowerCase();
+
+    if (guess === "") {
+        document.getElementById("message").innerHTML = "Please type an answer!";
+        return;
+    }
+
+    if (guess === selectedAnswer) {
+        // Correct! Show all letters
+        for (let letter of selectedAnswer) {
+            if (!guessedLetters.includes(letter) && letter !== ' ') {
+                guessedLetters.push(letter);
+            }
+        }
+        updateGame();
+        document.getElementById("message").innerHTML = "🎉 Correct! You Win!";
+        disableButtons();
+        input.disabled = true;
+    } else {
+        // Wrong answer - lose a life
+        wrongGuesses++;
+        updateGame();
+        document.getElementById("message").innerHTML = "❌ Wrong answer! Try again.";
+        
+        // Check if game over
+        if (wrongGuesses >= maxAttempts) {
+            document.getElementById("message").innerHTML = "😢 Game Over! The answer was: " + selectedAnswer;
+            disableButtons();
+            input.disabled = true;
+        }
+    }
+
+    input.value = "";
+}
+
+function disableButtons() {
+    document.querySelectorAll(".letter-btn").forEach(btn => btn.disabled = true);
+}
+
+function restartGame() {
+    document.getElementById("answerInput").disabled = false;
+    startGame();
+}
+
+function toggleInputMode() {
+    if (inputMode === 'word') {
+        inputMode = 'letter';
+        document.getElementById("letters").style.display = 'block';
+        document.querySelector('.answer-input').style.display = 'none';
+        document.querySelector('.answer-input button').textContent = 'Submit Answer';
+    } else {
+        inputMode = 'word';
+        document.getElementById("letters").style.display = 'none';
+        document.querySelector('.answer-input').style.display = 'block';
+        document.querySelector('.answer-input button').textContent = 'Submit Answer';
+    }
+    // Reset the game to start fresh in new mode
+    restartGame();
+}
+
+// Start the game
+startGame();
+
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
