@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            margin: 0 2px;
+        }
+
+        th {
+            background: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1><i class="bi bi-people-fill"></i> Student List</h1>
+        <a href="#" class="right-align font-12px border-radius-5px btn">
+            Add Student
+        </a>
+        <hr>
+
+        {% if student %}
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="bg-black text-white text-center">#</th>
+                    <th class="bg-black text-white text-center">Name</th>
+                    <th class="bg-black text-white text-center">Age</th>
+                    <th class="bg-black text-white text-center">DOB</th>
+                    <th class="bg-black text-white text-center">School</th>
+                    <th class="bg-black text-white text-center">school phone</th>
+                    <th class="bg-black text-white text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in student %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ s.name }}</td>
+                    <td>{{ s.age }}</td>
+                    <td>{{ s.dob }}</td>
+                    <td>{{ s.school.name }}</td>
+                    <td>{{ s.school.phone_number }}</td>
+                    <td class="text-center">
+                        <a href="{%url 'student-update' s.id %}">
+                            <button class="btn btn-sm btn-success">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </a>
+
+
+
+                        <a href="/school/student-update/{{s.id}}">
+                            <button class="btn btn-sm btn-success">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </a>
+
+
+
+                        <a href="{% url 'student-delete' s.id %}">
+                            <button class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No students found.
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

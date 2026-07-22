@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Project</title>
+    <style>
+    body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: skyblue;
+}
+
+label {
+    font-size: medium;
+    color: black;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.enter {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    
+}
+
+input {
+    height: 30px;
+    width: 200px;
+    border-radius: 15px;
+    padding-left: 10px;
+}
+
+button {
+    margin-top: 20px;
+    width: 100px;
+}
+</style>
+</head>
+<body>
+    <div class="enter">
+    <form method="post">
+    {% csrf_token %}
+
+   
+
+    <label>Name:</label>
+    <input type="text" name="name">
+
+    <label>E-mail:</label>
+    <input type="email" name="email">
+
+    <label>Start-date:</label>
+    <input type="date" name="start_date">
+
+    <label>End-date:</label>
+    <input type="date" name="end_date">
+
+    <button type="submit">Submit</button>
+
+    {% for p in project %}
+    {% if p.is_active %}
+        <h3>{{ p.name }}</h3>
+
+        <p>{{ p.email }}</p>
+    
+    {% endif %}
+        
+
+
+
+{% endfor %}
+</form>
+</div>
+    
+</body>
+</html>

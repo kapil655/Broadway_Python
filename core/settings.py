@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     #user created app definition
     'home',
     'product',
+    'project1',
+    'school',
+    
+    
     
 
 

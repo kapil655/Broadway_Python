@@ -1,0 +1,36 @@
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from project1.forms import DatastoreForm
+from project1.models import datastore  # Note: lowercase 'd'
+
+def create_student(request):
+    if request.method == "POST":
+        form = DatastoreForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Student created successfully!')
+            return redirect('create_student')
+    else:
+        form = DatastoreForm()
+    
+    return render(request, 'projects/creat.html', {'form': form})
+
+
+def view_student(request):
+    # Use lowercase 'datastore' to match your model
+    students = datastore.objects.all().order_by('-id')
+    
+    if request.method == "POST":
+        form = DatastoreForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Student added successfully!')
+            return redirect('view_student')
+    else:
+        form = DatastoreForm()
+    
+    context = {
+        'form': form,
+        'students': students,
+    }
+    return render(request, 'projects/view.html', context)
