@@ -2,6 +2,7 @@ from django.contrib import admin
 from school.models import School, Student, Subject,Grade
 # Register your models here.
 
+
 @admin.register(School)
 class SchoolAdmin(admin.ModelAdmin):
     list_display = ['id','name']

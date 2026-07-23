@@ -57,3 +57,4 @@ class Grade(models.Model):
 
     class Meta:
         db_table = "grade"
+

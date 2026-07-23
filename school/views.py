@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import redirect, render
 from . import models
 from .forms import StudentForms, GradeForm
