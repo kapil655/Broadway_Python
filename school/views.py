@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
-from school.forms import StudentForms
-from school.models import School,Student
+from school.forms import StudentForms, StudentForms
+from school.models import Grade, School,Student
 
 # Create your views here.
 def student_list(request):
@@ -52,3 +52,28 @@ def student_delete(request, id):
     }
 
     return render(request, "student/delete.html", context)
+
+
+
+def grade_list(request):
+    data = Grade.objects.all()
+    context = {"Grade":Grade}
+    return render(request,'grade/index.html',context)
+
+
+def grade_create(request):
+    data = Grade.objects.all()
+
+    if request.method == "POST":
+        form = StudentForms(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('grade_list')  # Replace with your URL name
+    else:
+        form = StudentForms()
+
+    return render(request, "student/create.html", {
+        "form": form,
+        "data": data
+    })
+            
