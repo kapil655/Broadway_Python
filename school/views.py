@@ -1,47 +1,60 @@
 from django.shortcuts import redirect, render
-from school.forms import StudentForms, StudentForms
-from school.models import Grade, School,Student
+from . import models
+from .forms import StudentForms, GradeForm
 
-# Create your views here.
+
+# =========================
+# STUDENT CRUD
+# =========================
+
 def student_list(request):
-    data = Student.objects.all()
+    data = models.Student.objects.all()
+
     context = {
-        "student":data
+        "student": data
     }
-    return render(request,"student/index.html",context)
+
+    return render(request, "student/index.html", context)
+
 
 def student_create(request):
     form = StudentForms()
+
     if request.method == "POST":
         form = StudentForms(request.POST)
+
         if form.is_valid():
             form.save()
-            return redirect('student')
+            return redirect("student")
+
     context = {
         "form": form
     }
-    return render(request, 'student/create.html', context)
+
+    return render(request, "student/create.html", context)
 
 
 def student_update(request, id):
-    student = Student.objects.get(id=id)
+    student = models.Student.objects.get(id=id)
+
     form = StudentForms(instance=student)
+
     if request.method == "POST":
         form = StudentForms(request.POST, instance=student)
+
         if form.is_valid():
             form.save()
-            return redirect('student')
+            return redirect("student")
+
     context = {
-        "form": form    }
-    return render(request, 'student/update.html', context)  
+        "form": form
+    }
 
+    return render(request, "student/update.html", context)
 
-#delete model 
-
-from django.shortcuts import get_object_or_404, redirect, render
 
 def student_delete(request, id):
-    student = get_object_or_404(Student, id=id)
+    student = models.Student.objects.get(id=id)
 
     if request.method == "POST":
         student.delete()
@@ -55,25 +68,53 @@ def student_delete(request, id):
 
 
 
+
+# GRADE CRUD
+
 def grade_list(request):
-    data = Grade.objects.all()
-    context = {"Grade":Grade}
-    return render(request,'grade/index.html',context)
+    data = models.Grade.objects.all()
+    context = {
+        "grade": data
+    }
+    return render(request, "grade/index.html", context)
+
 
 
 def grade_create(request):
-    data = Grade.objects.all()
-
+    form = GradeForm()
     if request.method == "POST":
-        form = StudentForms(request.POST)
+        form = GradeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('grade_list')  # Replace with your URL name
-    else:
-        form = StudentForms()
+            return redirect("grade-list")
+    context = {
+        "form": form
+    }
+    return render(request, "grade/create.html", context)
 
-    return render(request, "student/create.html", {
-        "form": form,
-        "data": data
-    })
-            
+
+
+def grade_update(request, id):
+    grade = models.Grade.objects.get(id=id)
+    form = GradeForm(instance=grade)
+    if request.method == "POST":
+        form = GradeForm(request.POST, instance=grade)
+        if form.is_valid():
+            form.save()
+            return redirect("grade-list")
+    context = {
+        "form": form
+    }
+    return render(request, "grade/update.html", context)
+
+
+
+def grade_delete(request, id):
+    grade = models.Grade.objects.get(id=id)
+    if request.method == "POST":
+        grade.delete()
+        return redirect("grade-list")
+    context = {
+        "grade": grade
+    }
+    return render(request, "grade/delete.html", context)
