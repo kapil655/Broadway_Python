@@ -17,7 +17,7 @@ def create_student(request):
 
 
 def view_student(request):
-    # Use lowercase 'datastore' to match your model
+    
     students = datastore.objects.all().order_by('-id')
     
     if request.method == "POST":
@@ -34,3 +34,18 @@ def view_student(request):
         'students': students,
     }
     return render(request, 'projects/view.html', context)
+
+
+
+
+
+def delete_student(request):
+    student = datastore.objects.get(id=id)
+
+    if request.method == "POST":
+        student.delete()
+        return redirect("create_student")
+
+    return render(request, "projects/delete.html", {"student": student})
+    
+
