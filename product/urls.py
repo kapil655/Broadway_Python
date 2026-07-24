@@ -4,13 +4,13 @@ from product.views import product_view,landing_page,product_list,product_create,
 
 
 urlpatterns = [
-    path('data/',product_view),
-    path('landing/',landing_page),
-      path('game/',game_choice),
-      path('facebook/',facebook),
-      path('hangman/',hangman),
-    path('product_list/',product_list),
-    path('create/',product_create),
-    path('update/<int:id>',product_update),
-    path('delete/<int:id>',project_delete), 
+    path('data/',product_view,name="product-view"),
+    path('landing/',landing_page,name="landing"),
+      path('game/',game_choice,name="game"),
+      path('facebook/',facebook,name="facebook"),
+      path('hangman/',hangman,name="hangman"),
+    path('product_list/',product_list,name="product-list"),
+    path('create/',product_create,name="create"),
+    path('update/<int:id>',product_update,name="product-update"),
+    path('delete/<int:id>',project_delete,name="product-delete"), 
 ]

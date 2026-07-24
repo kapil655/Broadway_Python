@@ -1,94 +1,139 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create Student</title>
+{% extends 'base/base.html' %}
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f4f8;
-            margin: 0;
-            padding: 0;
-        }
+{% block container %}
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-top: 40px;
-        }
+<style>
+    .student-form-container {
+        max-width: 500px;
+        margin: 20px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
 
-        form {
-            background: white;
-            width: 400px;
-            margin: 30px auto;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
-        }
+    .top-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
 
-        form p {
-            margin-bottom: 15px;
-        }
+    .btn {
+        padding: 10px 18px;
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
 
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #444;
-        }
+    .add-btn {
+        background: #2563eb;
+    }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 15px;
-        }
+    .add-btn:hover {
+        background: #1d4ed8;
+    }
 
-        input:focus {
-            outline: none;
-            border-color: #007bff;
-        }
+    .list-btn {
+        background: #dc2626;
+    }
 
-        button {
-            width: 100%;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    .list-btn:hover {
+        background: #b91c1c;
+    }
 
-        button:hover {
-            background-color: #0056b3;
-        }
+    .student-form-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        color: #1f2937;
+        margin-bottom: 25px;
+    }
 
-        .errorlist {
-            color: red;
-            font-size: 14px;
-            list-style: none;
-            padding: 0;
-        }
+    form p {
+        margin-bottom: 15px;
+    }
 
-    </style>
+    form label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
 
-</head>
+    form input,
+    form select,
+    form textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
 
-<body>
+    form input:focus,
+    form select:focus,
+    form textarea:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
 
- 
-    <h1>Add Student Information</h1>
+    .submit-btn {
+        width: 100%;
+        background: #2563eb;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+        background: #1d4ed8;
+    }
+</style>
+
+
+<div class="student-form-container">
+
+
+    <div class="top-buttons">
+
+        <!-- Add Student -->
+        <a href="{% url 'create-student' %}" class="btn add-btn">
+            ➕ Add Student
+        </a>
+
+
+        <!-- Student List -->
+        <a href="{% url 'view-student' %}" class="btn list-btn">
+            👨‍🎓 Student List
+        </a>
+
+    </div>
+
+
+    <h1 class="student-form-title">
+        Add Student Information
+    </h1>
+
+
     <form method="POST">
+
         {% csrf_token %}
+
         {{ form.as_p }}
-        <button type="submit">Submit</button>
 
-   
-</form>
+        <button type="submit" class="submit-btn">
+            Submit
+        </button>
 
-</body>
-</html>
+    </form>
+
+
+</div>
+
+
+{% endblock %}

@@ -68,3 +68,5 @@ def project_delete(request, id):
     return redirect('/home/project-list/')  
 
 
+def dashboard(request):
+    return render(request, 'base/dashboard.html')
