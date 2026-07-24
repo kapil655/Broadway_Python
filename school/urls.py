@@ -8,7 +8,7 @@ urlpatterns = [
     path('student-delete/<int:id>', student_delete , name="student-delete"),
     path('student-update/<int:id>',student_update, name="student-update"),
 
-    #grade-data-link
+    #grade-data-link 
     path("grade-list/", grade_list, name="grade-list"),
     path('grade-create/',grade_create, name="grade-create"),
     path('grade-update/<int:id>',grade_update, name="grade-update"),

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'product',
     'project1',
     'school',
+    'user',
     
     
     
