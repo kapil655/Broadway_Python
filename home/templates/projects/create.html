@@ -1,84 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Project</title>
-    <style>
-    body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: skyblue;
-}
+{% extends 'base.html' %}
 
-label {
-    font-size: medium;
-    color: black;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.enter {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+{% block content %}
+<div class="container">
+    <h1>Student List</h1>
     
-}
-
-input {
-    height: 30px;
-    width: 200px;
-    border-radius: 15px;
-    padding-left: 10px;
-}
-
-button {
-    margin-top: 20px;
-    width: 100px;
-}
-</style>
-</head>
-<body>
-    <div class="enter">
-    <form method="post">
-    {% csrf_token %}
-
-   
-
-    <label>Name:</label>
-    <input type="text" name="name">
-
-    <label>E-mail:</label>
-    <input type="email" name="email">
-
-    <label>Start-date:</label>
-    <input type="date" name="start_date">
-
-    <label>End-date:</label>
-    <input type="date" name="end_date">
-
-    <button type="submit">Submit</button>
-
-    {% for p in project %}
-    {% if p.is_active %}
-        <h3>{{ p.name }}</h3>
-
-        <p>{{ p.email }}</p>
+    <!-- ✅ FIXED: Removed 'product:' namespace -->
+    <a href="{% url 'student-create' %}" class="btn btn-primary">Add Student</a>
     
-    {% endif %}
-        
-
-
-
-{% endfor %}
-</form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Grade</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.grade }}</td>
+                <td>
+                    <!-- ✅ FIXED: Removed 'product:' namespace -->
+                    <a href="{% url 'student-update' student.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'student-delete' student.id %}" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="{% url 'student-detail' student.id %}" class="btn btn-sm btn-info">View</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No students found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-    
-</body>
-</html>
+{% endblock %}

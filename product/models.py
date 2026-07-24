@@ -7,7 +7,7 @@ class Product(models.Model):
     email = models.EmailField(blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.price}"  # ✅ Better representation
 
     class Meta:
         db_table = "Product"
