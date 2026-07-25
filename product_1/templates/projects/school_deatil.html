@@ -1,0 +1,106 @@
+{% extends 'projects/base.html' %}
+{% block title %}School Details{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4"><i class="fas fa-school"></i> School Details</h1>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <i class="fas fa-info-circle"></i> School Information
+            </div>
+            <div class="card-body">
+                <h3>{{ school.name }}</h3>
+                <p><strong>Address:</strong> {{ school.address }}</p>
+                <p><strong>Phone:</strong> {{ school.cl_number }}</p>
+                <p><strong>Email:</strong> {{ school.cl_mail }}</p>
+                <hr>
+                <div class="row text-center">
+                    <div class="col-4">
+                        <h4 class="text-primary">{{ teacher_count }}</h4>
+                        <small>Teachers</small>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="text-success">{{ student_count }}</h4>
+                        <small>Students</small>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="text-info">{{ faculty_count }}</h4>
+                        <small>Faculties</small>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'edit_school' school.id %}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'delete_school' school.id %}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <i class="fas fa-users"></i> Teachers & Students
+            </div>
+            <div class="card-body">
+                <h5>Faculties ({{ faculty_count }})</h5>
+                {% if faculties %}
+                    <ul class="list-group mb-3">
+                        {% for faculty in faculties %}
+                            <li class="list-group-item">
+                                <strong>{{ faculty.sub_name }}</strong>
+                                <br>
+                                <small>
+                                    <i class="fas fa-clock"></i> 
+                                    {{ faculty.school_open|time:"H:i" }} - {{ faculty.school_close|time:"H:i" }}
+                                </small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No faculties available.</p>
+                {% endif %}
+
+                <h5>Teachers ({{ teacher_count }})</h5>
+                {% if teachers %}
+                    <ul class="list-group mb-3">
+                        {% for teacher in teachers %}
+                            <li class="list-group-item">{{ teacher.name }} - {{ teacher.faculty.sub_name }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No teachers assigned.</p>
+                {% endif %}
+
+                <h5>Students ({{ student_count }})</h5>
+                {% if students %}
+                    <ul class="list-group">
+                        {% for student in students %}
+                            <li class="list-group-item">{{ student.name }} - Grade {{ student.grade.grade }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No students enrolled.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <a href="{% url 'view_schools' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Schools
+        </a>
+    </div>
+</div>
+{% endblock %}

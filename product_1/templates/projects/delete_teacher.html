@@ -1,0 +1,43 @@
+{% extends 'projects/base.html' %}
+{% block title %}Delete Teacher{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4"><i class="fas fa-user-minus"></i> Delete Teacher</h1>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <i class="fas fa-exclamation-triangle"></i> Confirm Delete
+            </div>
+            <div class="card-body">
+                <p class="lead">Are you sure you want to delete the following teacher?</p>
+                
+                <div class="alert alert-warning">
+                    <strong>Teacher Name:</strong> {{ teacher.name }}<br>
+                    <strong>School:</strong> {{ teacher.school.name }}<br>
+                    <strong>Subject:</strong> {{ teacher.faculty.sub_name }}<br>
+                    <strong>Age:</strong> {{ teacher.age }}
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Yes, Delete Teacher
+                        </button>
+                        <a href="{% url 'teacher_detail' teacher.id %}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

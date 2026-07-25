@@ -17,35 +17,32 @@ def create_student(request):
 
 
 def view_student(request):
-    
-    students = datastore.objects.all().order_by('-id')
-    
+    students = datastore.objects.all().order_by("id")
+
     if request.method == "POST":
         form = DatastoreForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Student added successfully!')
-            return redirect('view_student')
+            messages.success(request, "Student added successfully!")
+            return redirect("view-student")   # ✅ Correct
     else:
         form = DatastoreForm()
-    
-    context = {
-        'form': form,
-        'students': students,
-    }
-    return render(request, 'projects/view.html', context)
+
+    return render(request, "projects/view.html", {
+        "form": form,
+        "students": students,
+    })
 
 
 
 
 
-def delete_student(request):
+def delete_student(request, id):
     student = datastore.objects.get(id=id)
 
     if request.method == "POST":
         student.delete()
-        return redirect("create_student")
+        messages.success(request, "Deleted successfully!")
+        return redirect("view-student")
 
     return render(request, "projects/delete.html", {"student": student})
-    
-
