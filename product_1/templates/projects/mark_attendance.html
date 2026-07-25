@@ -3,97 +3,32 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-12">
-        <h1 class="mb-4"><i class="fas fa-clipboard-check"></i> Mark Attendance</h1>
-        <hr>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header bg-primary text-white">
-                <i class="fas fa-user-check"></i> Mark Today's Attendance
-            </div>
+            <div class="card-header bg-primary text-white"><i class="fas fa-clipboard-check"></i> Mark Attendance</div>
             <div class="card-body">
                 <form method="post">
                     {% csrf_token %}
-                    
-                    {% if form.errors %}
-                        <div class="alert alert-danger">
-                            <strong>Please correct the following errors:</strong>
-                            {{ form.errors }}
-                        </div>
-                    {% endif %}
-                    
-                    <div class="mb-3">
-                        <label for="{{ form.student.id_for_label }}" class="form-label">Student *</label>
-                        {{ form.student }}
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label class="form-label">Attendance Status *</label>
-                        <div class="form-check">
-                            {{ form.present }}
-                            <label class="form-check-label" for="{{ form.present.id_for_label }}">
-                                Present
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            {{ form.absent }}
-                            <label class="form-check-label" for="{{ form.absent.id_for_label }}">
-                                Absent
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="{{ form.date.id_for_label }}" class="form-label">Date *</label>
-                        {{ form.date }}
-                    </div>
-                    
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> Mark Attendance
-                        </button>
-                    </div>
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
                 </form>
             </div>
         </div>
     </div>
-    
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header bg-success text-white">
-                <i class="fas fa-list"></i> Today's Attendance
-            </div>
+            <div class="card-header bg-success text-white"><i class="fas fa-list"></i> Today's Attendance</div>
             <div class="card-body">
-                {% if today_attendance %}
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Student</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for att in today_attendance %}
-                                <tr>
-                                    <td>{{ att.student.name }}</td>
-                                    <td>
-                                        <span class="badge {% if att.present %}bg-success{% else %}bg-danger{% endif %}">
-                                            {% if att.present %}Present{% else %}Absent{% endif %}
-                                        </span>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                {% for att in today_attendance %}
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span>{{ att.student.name }}</span>
+                        <span class="badge {% if att.present %}bg-success{% else %}bg-danger{% endif %}">
+                            {% if att.present %}Present{% else %}Absent{% endif %}
+                        </span>
                     </div>
-                {% else %}
-                    <p class="text-muted">No attendance marked for today.</p>
-                {% endif %}
+                {% empty %}
+                    <p class="text-muted">No attendance marked today.</p>
+                {% endfor %}
             </div>
         </div>
     </div>

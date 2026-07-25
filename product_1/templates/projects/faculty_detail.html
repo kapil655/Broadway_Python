@@ -1,0 +1,93 @@
+{% extends 'projects/base.html' %}
+{% block title %}Faculty Details{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <i class="fas fa-info-circle"></i> Faculty Information
+            </div>
+            <div class="card-body">
+                <h3>{{ faculty.sub_name }}</h3>
+                <p><strong>School:</strong> {{ faculty.school.name }}</p>
+                <p><strong>Open Time:</strong> {{ faculty.school_open|time:"H:i" }}</p>
+                <p><strong>Close Time:</strong> {{ faculty.school_close|time:"H:i" }}</p>
+                <hr>
+                <div class="row text-center">
+                    <div class="col-6">
+                        <h4 class="text-primary">{{ teacher_count }}</h4>
+                        <small>Teachers</small>
+                    </div>
+                    <div class="col-6">
+                        <h4 class="text-success">{{ grade_count }}</h4>
+                        <small>Grades</small>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'edit_faculty' faculty.id %}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'delete_faculty' faculty.id %}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <i class="fas fa-users"></i> Teachers & Grades
+            </div>
+            <div class="card-body">
+                <h5>Teachers ({{ teacher_count }})</h5>
+                {% if teachers %}
+                    <ul class="list-group mb-3">
+                        {% for teacher in teachers %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-chalkboard-teacher"></i> {{ teacher.name }}
+                                    <small class="text-muted">({{ teacher.school.name }})</small>
+                                </div>
+                                <a href="{% url 'teacher_detail' teacher.id %}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No teachers assigned to this faculty.</p>
+                {% endif %}
+
+                <h5>Grades ({{ grade_count }})</h5>
+                {% if grades %}
+                    <ul class="list-group">
+                        {% for grade in grades %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-graduation-cap"></i> {{ grade.get_grade_display }}
+                                    <small class="text-muted">({{ grade.teacher.name }})</small>
+                                </div>
+                                <a href="{% url 'grade_detail' grade.id %}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No grades assigned to this faculty.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <a href="{% url 'view_faculties' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Faculties
+        </a>
+    </div>
+</div>
+{% endblock %}

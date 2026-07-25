@@ -66,7 +66,7 @@ class SubjectForm(forms.ModelForm):
         fields = ['name', 'code', 'level', 'description', 'credit_hours', 'is_active']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter subject name'}),
-            'code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter subject code (e.g., MATH101)'}),
+            'code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter subject code'}),
             'level': forms.Select(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Enter description'}),
             'credit_hours': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter credit hours'}),

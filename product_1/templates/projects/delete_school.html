@@ -3,43 +3,15 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-12">
-        <h1 class="mb-4"><i class="fas fa-trash"></i> Delete School</h1>
-        <hr>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-md-6 offset-md-3">
         <div class="card">
-            <div class="card-header bg-danger text-white">
-                <i class="fas fa-exclamation-triangle"></i> Confirm Delete
-            </div>
+            <div class="card-header bg-danger text-white"><i class="fas fa-exclamation-triangle"></i> Confirm Delete</div>
             <div class="card-body">
-                <p class="lead">Are you sure you want to delete the following school?</p>
-                
-                <div class="alert alert-warning">
-                    <strong>School Name:</strong> {{ school.name }}<br>
-                    <strong>Address:</strong> {{ school.address }}<br>
-                    <strong>Phone:</strong> {{ school.cl_number }}<br>
-                    <strong>Email:</strong> {{ school.cl_mail }}
-                </div>
-                
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <strong>Warning:</strong> This will delete all associated data!
-                </div>
-                
+                <p>Are you sure you want to delete "{{ school.name }}"?</p>
                 <form method="post">
                     {% csrf_token %}
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fas fa-trash"></i> Yes, Delete School
-                        </button>
-                        <a href="{% url 'school_detail' school.id %}" class="btn btn-secondary">
-                            <i class="fas fa-times"></i> Cancel
-                        </a>
-                    </div>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Yes, Delete</button>
+                    <a href="{% url 'school_detail' school.id %}" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>

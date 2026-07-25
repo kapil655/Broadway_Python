@@ -1,0 +1,63 @@
+{% extends 'projects/base.html' %}
+{% block title %}Faculties List{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-building"></i> Faculties</h1>
+    <a href="{% url 'add_faculty' %}" class="btn btn-success">
+        <i class="fas fa-plus"></i> Add Faculty
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        {% if faculties %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Faculty Name</th>
+                            <th>School</th>
+                            <th>Open Time</th>
+                            <th>Close Time</th>
+                            <th>Teachers</th>
+                            <th>Grades</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for faculty in faculties %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><strong>{{ faculty.sub_name }}</strong></td>
+                            <td>{{ faculty.school.name }}</td>
+                            <td>{{ faculty.school_open|time:"H:i" }}</td>
+                            <td>{{ faculty.school_close|time:"H:i" }}</td>
+                            <td><span class="badge bg-info">{{ faculty.teacher_count|default:0 }}</span></td>
+                            <td><span class="badge bg-success">{{ faculty.grade_count|default:0 }}</span></td>
+                            <td>
+                                <a href="{% url 'faculty_detail' faculty.id %}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{% url 'edit_faculty' faculty.id %}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'delete_faculty' faculty.id %}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> No faculties found.
+                <a href="{% url 'add_faculty' %}" class="alert-link">Add a faculty</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
