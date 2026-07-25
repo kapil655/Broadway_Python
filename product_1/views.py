@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.utils import timezone
-from .models import Teacher, Student, Attendance, Grade, School
-from .forms import StudentForm, AttendanceForm, TeacherForm, SchoolForm
+from .models import Teacher, Student, Attendance, Grade, School, Subject
+from .forms import StudentForm, AttendanceForm, TeacherForm, SchoolForm, GradeForm, SubjectForm
 
 def home(request):
     """Dashboard home page"""
@@ -12,6 +12,7 @@ def home(request):
         'total_students': Student.objects.count(),
         'total_teachers': Teacher.objects.count(),
         'total_schools': School.objects.count(),
+        'total_subjects': Subject.objects.count(),
         'recent_attendance': Attendance.objects.select_related('student').order_by('-date')[:10],
         'today_attendance': Attendance.objects.filter(date=timezone.now().date()).count(),
         'grades_with_students': Grade.objects.annotate(student_count=Count('students')),
@@ -101,11 +102,158 @@ def delete_school(request, school_id):
     })
 
 
+# ==================== SUBJECT VIEWS ====================
+
+def view_subjects(request):
+    """List all subjects"""
+    subjects = Subject.objects.all().annotate(
+        teacher_count=Count('teachers'),
+        grade_count=Count('grades')
+    )
+    return render(request, 'projects/subjects.html', {
+        'subjects': subjects
+    })
+
+def subject_detail(request, subject_id):
+    """View subject details"""
+    subject = get_object_or_404(Subject, id=subject_id)
+    teachers = subject.teachers.all()
+    grades = subject.grades.all()
+    return render(request, 'projects/subject_detail.html', {
+        'subject': subject,
+        'teachers': teachers,
+        'grades': grades
+    })
+
+def add_subject(request):
+    """Add new subject"""
+    if request.method == 'POST':
+        form = SubjectForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Subject added successfully!')
+            return redirect('view_subjects')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = SubjectForm()
+    
+    return render(request, 'projects/add_subject.html', {
+        'form': form
+    })
+
+def edit_subject(request, subject_id):
+    """Edit subject details"""
+    subject = get_object_or_404(Subject, id=subject_id)
+    
+    if request.method == 'POST':
+        form = SubjectForm(request.POST, instance=subject)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Subject updated successfully!')
+            return redirect('subject_detail', subject_id=subject.id)
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = SubjectForm(instance=subject)
+    
+    return render(request, 'projects/edit_subject.html', {
+        'form': form,
+        'subject': subject
+    })
+
+def delete_subject(request, subject_id):
+    """Delete subject"""
+    subject = get_object_or_404(Subject, id=subject_id)
+    
+    if request.method == 'POST':
+        subject_name = subject.name
+        subject.delete()
+        messages.success(request, f'Subject "{subject_name}" deleted successfully!')
+        return redirect('view_subjects')
+    
+    return render(request, 'projects/delete_subject.html', {
+        'subject': subject
+    })
+
+
+# ==================== GRADE VIEWS ====================
+
+def view_grades(request):
+    """List all grades"""
+    grades = Grade.objects.all().select_related('teacher', 'subject').annotate(
+        student_count=Count('students')
+    )
+    return render(request, 'projects/grades.html', {
+        'grades': grades
+    })
+
+def grade_detail(request, grade_id):
+    """View grade details with students"""
+    grade = get_object_or_404(Grade, id=grade_id)
+    students = grade.students.all().select_related('school')
+    return render(request, 'projects/grade_detail.html', {
+        'grade': grade,
+        'students': students
+    })
+
+def add_grade(request):
+    """Add new grade"""
+    if request.method == 'POST':
+        form = GradeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Grade added successfully!')
+            return redirect('view_grades')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = GradeForm()
+    
+    return render(request, 'projects/add_grade.html', {
+        'form': form
+    })
+
+def edit_grade(request, grade_id):
+    """Edit grade details"""
+    grade = get_object_or_404(Grade, id=grade_id)
+    
+    if request.method == 'POST':
+        form = GradeForm(request.POST, instance=grade)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Grade updated successfully!')
+            return redirect('grade_detail', grade_id=grade.id)
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = GradeForm(instance=grade)
+    
+    return render(request, 'projects/edit_grade.html', {
+        'form': form,
+        'grade': grade
+    })
+
+def delete_grade(request, grade_id):
+    """Delete grade"""
+    grade = get_object_or_404(Grade, id=grade_id)
+    
+    if request.method == 'POST':
+        grade_number = grade.get_grade_display()
+        grade.delete()
+        messages.success(request, f'{grade_number} deleted successfully!')
+        return redirect('view_grades')
+    
+    return render(request, 'projects/delete_grade.html', {
+        'grade': grade
+    })
+
+
 # ==================== TEACHER VIEWS ====================
 
 def view_teachers(request):
     """List all teachers"""
-    teachers = list(Teacher.objects.select_related('school', 'faculty').all())
+    teachers = list(Teacher.objects.select_related('school', 'faculty').prefetch_related('subjects').all())
     return render(request, 'projects/teachers.html', {
         'teachers': teachers
     })
@@ -241,7 +389,6 @@ def attendance_report(request):
     if date_filter:
         attendance = attendance.filter(date=date_filter)
     
-    # Filter by status (present or absent)
     if status_filter == 'present':
         attendance = attendance.filter(present=True)
     elif status_filter == 'absent':

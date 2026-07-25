@@ -14,6 +14,20 @@ urlpatterns = [
     path('school/edit/<int:school_id>/', views.edit_school, name='edit_school'),
     path('school/delete/<int:school_id>/', views.delete_school, name='delete_school'),
     
+    # ==================== SUBJECT URLs ====================
+    path('subjects/', views.view_subjects, name='view_subjects'),
+    path('subject/add/', views.add_subject, name='add_subject'),
+    path('subject/<int:subject_id>/', views.subject_detail, name='subject_detail'),
+    path('subject/edit/<int:subject_id>/', views.edit_subject, name='edit_subject'),
+    path('subject/delete/<int:subject_id>/', views.delete_subject, name='delete_subject'),
+    
+    # ==================== GRADE URLs ====================
+    path('grades/', views.view_grades, name='view_grades'),
+    path('grade/add/', views.add_grade, name='add_grade'),
+    path('grade/<int:grade_id>/', views.grade_detail, name='grade_detail'),
+    path('grade/edit/<int:grade_id>/', views.edit_grade, name='edit_grade'),
+    path('grade/delete/<int:grade_id>/', views.delete_grade, name='delete_grade'),
+    
     # ==================== TEACHER URLs ====================
     path('teacher/', RedirectView.as_view(pattern_name='view_teachers', permanent=False)),
     path('teachers/', views.view_teachers, name='view_teachers'),

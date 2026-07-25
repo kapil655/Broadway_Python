@@ -36,6 +36,7 @@
     .stat-green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
     .stat-orange { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
     .stat-purple { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+    .stat-pink { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
     
     .quick-action-card {
         border-radius: 10px;
@@ -144,44 +145,58 @@
             <i class="fas fa-bolt"></i> Quick Actions
         </h4>
     </div>
-    <div class="col-md-3 col-sm-6 mb-3">
+    <div class="col-md-2 col-sm-4 mb-3">
         <div class="quick-action-card" onclick="window.location.href='{% url 'add_school' %}'">
             <div class="icon text-primary"><i class="fas fa-plus-circle"></i></div>
             <div class="title">Add School</div>
-            <small class="text-muted">Register new school</small>
+            <small class="text-muted">Register new</small>
         </div>
     </div>
-    <div class="col-md-3 col-sm-6 mb-3">
+    <div class="col-md-2 col-sm-4 mb-3">
         <div class="quick-action-card" onclick="window.location.href='{% url 'add_teacher' %}'">
             <div class="icon text-success"><i class="fas fa-user-plus"></i></div>
             <div class="title">Add Teacher</div>
-            <small class="text-muted">Hire new teacher</small>
+            <small class="text-muted">Hire new</small>
         </div>
     </div>
-    <div class="col-md-3 col-sm-6 mb-3">
+    <div class="col-md-2 col-sm-4 mb-3">
+        <div class="quick-action-card" onclick="window.location.href='{% url 'add_grade' %}'">
+            <div class="icon text-info"><i class="fas fa-book"></i></div>
+            <div class="title">Add Grade</div>
+            <small class="text-muted">Create new grade</small>
+        </div>
+    </div>
+    <div class="col-md-2 col-sm-4 mb-3">
         <div class="quick-action-card" onclick="window.location.href='{% url 'add_student' %}'">
             <div class="icon text-warning"><i class="fas fa-user-graduate"></i></div>
             <div class="title">Add Student</div>
-            <small class="text-muted">Enroll new student</small>
+            <small class="text-muted">Enroll new</small>
         </div>
     </div>
-    <div class="col-md-3 col-sm-6 mb-3">
+    <div class="col-md-2 col-sm-4 mb-3">
         <div class="quick-action-card" onclick="window.location.href='{% url 'mark_attendance' %}'">
             <div class="icon text-danger"><i class="fas fa-check-double"></i></div>
             <div class="title">Mark Attendance</div>
-            <small class="text-muted">Record daily attendance</small>
+            <small class="text-muted">Record daily</small>
+        </div>
+    </div>
+    <div class="col-md-2 col-sm-4 mb-3">
+        <div class="quick-action-card" onclick="window.location.href='{% url 'view_grades' %}'">
+            <div class="icon text-secondary"><i class="fas fa-list"></i></div>
+            <div class="title">View Grades</div>
+            <small class="text-muted">Manage grades</small>
         </div>
     </div>
 </div>
 
-<!-- Two Column Layout - Recent Activity & Grade Distribution -->
+<!-- Three Column Layout -->
 <div class="row">
     <!-- Recent Attendance -->
-    <div class="col-lg-6 mb-4">
+    <div class="col-lg-4 mb-4">
         <div class="card">
             <div class="card-header">
                 <i class="fas fa-clock text-primary"></i> Recent Attendance
-                <span class="badge bg-primary float-end">Last 10 Records</span>
+                <span class="badge bg-primary float-end">Last 10</span>
             </div>
             <div class="card-body recent-activity">
                 {% if recent_attendance %}
@@ -190,7 +205,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <strong>{{ attendance.student.name }}</strong>
-                                <span class="badge {% if attendance.present %}badge-present{% else %}badge-absent{% endif %}">
+                                <span class="badge {% if attendance.present %}bg-success{% else %}bg-danger{% endif %}">
                                     {% if attendance.present %}Present{% else %}Absent{% endif %}
                                 </span>
                             </div>
@@ -213,7 +228,7 @@
     </div>
 
     <!-- Students by Grade -->
-    <div class="col-lg-6 mb-4">
+    <div class="col-lg-4 mb-4">
         <div class="card">
             <div class="card-header">
                 <i class="fas fa-users text-success"></i> Students by Grade
@@ -244,8 +259,64 @@
                 {% endif %}
             </div>
             <div class="card-footer">
+                <a href="{% url 'view_grades' %}" class="btn btn-sm btn-info">
+                    <i class="fas fa-book"></i> Manage Grades
+                </a>
                 <a href="{% url 'view_students' %}" class="btn btn-sm btn-success">
-                    <i class="fas fa-user-graduate"></i> Manage Students
+                    <i class="fas fa-user-graduate"></i> View Students
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grade Summary -->
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-info-circle text-warning"></i> Grade Summary
+                <span class="badge bg-warning float-end">Overview</span>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h3 class="text-primary">{{ grades_with_students|length }}</h3>
+                                <small class="text-muted">Total Grades</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h3 class="text-success">{{ total_students }}</h3>
+                                <small class="text-muted">Total Students</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-6 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h3 class="text-info">{{ total_teachers }}</h3>
+                                <small class="text-muted">Total Teachers</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h3 class="text-danger">{{ total_schools }}</h3>
+                                <small class="text-muted">Total Schools</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'view_schools' %}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-school"></i> View All Schools
                 </a>
             </div>
         </div>
@@ -267,6 +338,11 @@
                         </a>
                     </div>
                     <div class="col-md-2 col-4 mb-2">
+                        <a href="{% url 'view_grades' %}" class="btn btn-outline-info btn-block w-100">
+                            <i class="fas fa-book"></i><br>Grades
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-4 mb-2">
                         <a href="{% url 'view_teachers' %}" class="btn btn-outline-success btn-block w-100">
                             <i class="fas fa-chalkboard-teacher"></i><br>Teachers
                         </a>
@@ -282,13 +358,8 @@
                         </a>
                     </div>
                     <div class="col-md-2 col-4 mb-2">
-                        <a href="{% url 'attendance_report' %}" class="btn btn-outline-info btn-block w-100">
+                        <a href="{% url 'attendance_report' %}" class="btn btn-outline-secondary btn-block w-100">
                             <i class="fas fa-chart-bar"></i><br>Report
-                        </a>
-                    </div>
-                    <div class="col-md-2 col-4 mb-2">
-                        <a href="/admin/" class="btn btn-outline-secondary btn-block w-100">
-                            <i class="fas fa-cog"></i><br>Admin
                         </a>
                     </div>
                 </div>

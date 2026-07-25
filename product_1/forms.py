@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Student, Teacher, Attendance, School, Faculty, Grade
+from .models import Student, Teacher, Attendance, School, Faculty, Grade, Subject
 from datetime import date
 
 # ==================== STUDENT FORM ====================
@@ -35,7 +35,7 @@ class StudentForm(forms.ModelForm):
 class TeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        fields = ['name', 'age', 'address', 'number', 'school', 'faculty']
+        fields = ['name', 'age', 'address', 'number', 'school', 'faculty', 'subjects']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter teacher name'}),
             'age': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter age'}),
@@ -43,6 +43,7 @@ class TeacherForm(forms.ModelForm):
             'number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter phone number'}),
             'school': forms.Select(attrs={'class': 'form-control'}),
             'faculty': forms.Select(attrs={'class': 'form-control'}),
+            'subjects': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'height: 150px;'}),
         }
 
     def clean_age(self):
@@ -58,11 +59,53 @@ class TeacherForm(forms.ModelForm):
         return number
 
 
+# ==================== SUBJECT FORM ====================
+class SubjectForm(forms.ModelForm):
+    class Meta:
+        model = Subject
+        fields = ['name', 'code', 'level', 'description', 'credit_hours', 'is_active']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter subject name'}),
+            'code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter subject code (e.g., MATH101)'}),
+            'level': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Enter description'}),
+            'credit_hours': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter credit hours'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+# ==================== GRADE FORM ====================
+class GradeForm(forms.ModelForm):
+    class Meta:
+        model = Grade
+        fields = ['teacher', 'grade', 'subject', 'subjects']
+        widgets = {
+            'teacher': forms.Select(attrs={'class': 'form-control'}),
+            'grade': forms.Select(attrs={'class': 'form-control'}),
+            'subject': forms.Select(attrs={'class': 'form-control'}),
+            'subjects': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'height: 150px;'}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        teacher = cleaned_data.get('teacher')
+        grade = cleaned_data.get('grade')
+        
+        if teacher and grade:
+            if Grade.objects.filter(teacher=teacher, grade=grade).exists():
+                if self.instance.pk:
+                    if Grade.objects.filter(teacher=teacher, grade=grade).exclude(pk=self.instance.pk).exists():
+                        raise ValidationError('This grade already exists for this teacher')
+                else:
+                    raise ValidationError('This grade already exists for this teacher')
+        return cleaned_data
+
+
 # ==================== ATTENDANCE FORM ====================
 class AttendanceForm(forms.ModelForm):
     class Meta:
         model = Attendance
-        fields = ['student', 'present', 'absent', 'date']  # Changed to match your model
+        fields = ['student', 'present', 'absent', 'date']
         widgets = {
             'student': forms.Select(attrs={'class': 'form-control'}),
             'present': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -72,7 +115,6 @@ class AttendanceForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Set default date to today
         if not self.instance.pk:
             self.fields['date'].initial = date.today()
 
@@ -81,11 +123,8 @@ class AttendanceForm(forms.ModelForm):
         present = cleaned_data.get('present')
         absent = cleaned_data.get('absent')
         
-        # Ensure both present and absent are not True at the same time
         if present and absent:
             raise ValidationError('Student cannot be both present and absent')
-        
-        # Ensure at least one is selected
         if not present and not absent:
             raise ValidationError('Please select either Present or Absent')
         
@@ -119,21 +158,3 @@ class FacultyForm(forms.ModelForm):
             'school_open': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
             'school_close': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
         }
-
-
-# ==================== GRADE FORM ====================
-class GradeForm(forms.ModelForm):
-    class Meta:
-        model = Grade
-        fields = ['teacher', 'grade', 'subject']
-        widgets = {
-            'teacher': forms.Select(attrs={'class': 'form-control'}),
-            'grade': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter grade number'}),
-            'subject': forms.Select(attrs={'class': 'form-control'}),
-        }
-
-    def clean_grade(self):
-        grade = self.cleaned_data.get('grade')
-        if grade and (grade < 1 or grade > 12):
-            raise ValidationError('Grade must be between 1 and 12')
-        return grade
