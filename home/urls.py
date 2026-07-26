@@ -9,5 +9,6 @@ urlpatterns = [
     path('project-update/<int:id>/', project_update),
     path('project-delete/<int:id>/', project_delete), 
     path('dashboard/', dashboard, name='dashboard'),
+    
 ]
 

@@ -70,3 +70,6 @@ def project_delete(request, id):
 
 def dashboard(request):
     return render(request, 'base/dashboard.html')
+
+
+    
