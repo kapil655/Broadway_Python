@@ -66,7 +66,7 @@ def project_update(request, id):
 def project_delete(request, id):
     project = Project.objects.get(id=id)
     project.delete()
-    return redirect('/home/project-list/')  
+    return redirect('project-list/')  
 
 
 def dashboard(request):
@@ -77,6 +77,7 @@ class ProjectListView(ListView):
     model = Project
     template_name ='projects/index.html'
     context_object_name = "project"
+    context_object_name="project"
 
 # home/project_list.html
 # <app:name>/<modelname_list>.html
