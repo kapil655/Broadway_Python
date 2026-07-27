@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from home.forms import ProjectForm
 from home.models import Project
+from django.views.generic.list import ListView
 
 def home(request):
     data = request.GET
@@ -70,6 +71,15 @@ def project_delete(request, id):
 
 def dashboard(request):
     return render(request, 'base/dashboard.html')
+
+# class based views
+class ProjectListView(ListView):
+    model = Project
+    template_name ='projects/index.html'
+    context_object_name = "project"
+
+# home/project_list.html
+# <app:name>/<modelname_list>.html
 
 
     

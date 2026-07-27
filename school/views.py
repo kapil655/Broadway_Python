@@ -3,6 +3,7 @@ from urllib import request
 from django.shortcuts import redirect, render
 from . import models
 from .forms import StudentForms, GradeForm
+from user.models import UserImage
 
 
 # =========================
@@ -120,3 +121,8 @@ def grade_delete(request, id):
         "grade": grade
     }
     return render(request, "grade/delete.html", context)
+
+def user_image(request):
+    data = UserImage.objects.all()
+    context = {"user": data}
+    return render(request, "user/index.html", context)

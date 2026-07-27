@@ -1,4 +1,5 @@
 from django.urls import path
+from school.views import grade_create, grade_list, grade_update, student_list, student_create, student_update, user_image
 from school.views import (
     grade_delete, grade_list, grade_update, 
     student_list, student_create, student_update, student_delete, 
@@ -11,6 +12,9 @@ urlpatterns = [
     path('student-create/', student_create, name="student-create"),
     path('student-update/<int:id>/', student_update, name="student-update"),
     path('student-delete/<int:id>/', student_delete, name="student-delete"),
+
+    path('user/',user_image, name="user-image"),
+    
 
     # Grade URLs
     path('grade-list/', grade_list, name="grade-list"),
