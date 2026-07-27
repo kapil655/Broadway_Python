@@ -1,0 +1,16 @@
+# Virtual Environment
+venv/
+env/
+python_broadway/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Django
+*.sqlite3
+media/
+staticfiles/
+
+# Environment variables
+.env

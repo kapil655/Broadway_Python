@@ -5,7 +5,6 @@ token = "56c4977935f284d0-2473cf174906088-178254ed4f7db50c"
 
 user_id = "lsPph8fpPvYKrEapzeQvBA=="
 
-
 viber_url = "https://chatapi.viber.com/pa/post"
 
 payload={
@@ -28,14 +27,12 @@ payload_img = {
     "type":"picture",
     
     "text":"this is testing of beauty product",
-
-    "id":"id",
     
     "media":"https://d2wfc4v12a2zxr.cloudfront.net/resized/medium/products/main_aqualogica-radiance-dewy-sunscreen-50gm_1778838011.webp"
 }
 
 
-def send_message_to_viber(id,image_url,slug,title,message  ):
+def send_message_to_viber(image_url,slug,title,message  ):
 
     payload = {
         
@@ -52,9 +49,7 @@ def send_message_to_viber(id,image_url,slug,title,message  ):
         
         "title": title,
         
-        "slug_image":slug,
-
-        "id":id
+        "slug_image":slug
         
     }
 
