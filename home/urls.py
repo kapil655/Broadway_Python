@@ -4,10 +4,10 @@ from home.views import home, Json_data, project_list, project_create, project_up
 urlpatterns = [
     path('data/', home),
     path('json/', Json_data),
-    path('project-list/', project_list),
+    path('project-list/', project_list,name="list"),
     path('project-create/', project_create, name="project-create"),
-    path('project-update/<int:id>/', project_update),
-    path('project-delete/<int:id>/', project_delete), 
+    path('project-update/<int:id>/', project_update,name="update"),
+    path('project-delete/', project_delete,name="delete"), 
     path('dashboard/', dashboard, name='dashboard'),
     
 ]

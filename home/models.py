@@ -20,3 +20,4 @@ class Project(models.Model):
         
         class Meta:
             db_table="Projects"
+            

@@ -3,8 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from home.forms import ProjectForm
 from home.models import Project
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 def home(request):
     data = request.GET
     name = data.get('name', 'default')
@@ -75,12 +74,6 @@ def dashboard(request):
     return render(request, 'base/dashboard.html')
 
 # class based views
-class ProjectListView(ListView):
-    model = Project
-    template_name ='projects/index.html'
-    context_object_name = "project"
-    context_object_name="project"
-
 # home/project_list.html
 # <app:name>/<modelname_list>.html
 
@@ -88,29 +81,30 @@ class ProjectListView(ListView):
     
 class ProjectListView(ListView):
     model = Project
-    template_name ='project/index.html'
     context_object_name = "project"
-    template_name ='project/index.html' # <app:name>/<modelname_list>.html
-    context_object_name = "project" # by default : objects_list
+    template_name ='projects/index.html' # <app:name>/<modelname_list>.html
+    context_object_name = "projects" # by default : objects_list
+
 
 
 class ProjectCreateView(CreateView):
     model = Project
-    # fields = ['name','email','start_date']
+    #fields = ['name','email','start_date']
     form_class = ProjectForm
-    template_name = "project/create2.html" # <app:name>/<modelname_form>.html
+    template_name = "projects/create2.html" # <app:name>/<modelname_form>.html
     success_url = '/project/list'
 
 
 class ProjectUpdateView(UpdateView):
     model = Project
     form_class = ProjectForm
-    template_name = "project/update.html"
+    template_name = "projects/update.html"
     success_url = '/project/list'
     context_object_name = "form"
 
 class ProjectDeleteView(DeleteView):
     model = Project
-    form_class= ProjectForm
-    template_name = 'poject/index.html'
-    context_object_name = 'form'
+    # model.delete()
+    # template_name = 'projects/confirm_delete.html'
+    # context_object_name = 'project'
+    #TypeError: Model.delete() missing 1 required positional argument: 'self'
