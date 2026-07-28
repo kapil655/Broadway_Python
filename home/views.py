@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from home.forms import ProjectForm
 from home.models import Project
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 def home(request):
     data = request.GET
@@ -69,6 +70,7 @@ def project_delete(request, id):
     return redirect('project-list/')  
 
 
+
 def dashboard(request):
     return render(request, 'base/dashboard.html')
 
@@ -84,3 +86,31 @@ class ProjectListView(ListView):
 
 
     
+class ProjectListView(ListView):
+    model = Project
+    template_name ='project/index.html'
+    context_object_name = "project"
+    template_name ='project/index.html' # <app:name>/<modelname_list>.html
+    context_object_name = "project" # by default : objects_list
+
+
+class ProjectCreateView(CreateView):
+    model = Project
+    # fields = ['name','email','start_date']
+    form_class = ProjectForm
+    template_name = "project/create2.html" # <app:name>/<modelname_form>.html
+    success_url = '/project/list'
+
+
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = "project/update.html"
+    success_url = '/project/list'
+    context_object_name = "form"
+
+class ProjectDeleteView(DeleteView):
+    model = Project
+    form_class= ProjectForm
+    template_name = 'poject/index.html'
+    context_object_name = 'form'

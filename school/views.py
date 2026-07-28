@@ -126,3 +126,10 @@ def user_image(request):
     data = UserImage.objects.all()
     context = {"user": data}
     return render(request, "user/index.html", context)
+
+
+
+
+
+
+
