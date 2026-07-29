@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from product.forms import ProductForms
 from .models import Product
+from django.contrib.auth.decorators import login_required
 
 def product_view(request):
     return HttpResponse("<h1>This is product view</h1>")
@@ -29,6 +30,8 @@ def product_list(request):
     }
     return render(request, "product/product_list.html", context)
 
+
+@login_required(login_url='/user/login')
 def product_create(request):
     form = ProductForms()
     if request.method == "POST":
@@ -42,7 +45,7 @@ def product_create(request):
     }
     return render(request, 'product/create.html', context)
 
-# ✅ ADD THIS - Product Update
+@login_required(login_url='/user/login')
 def product_update(request, id):
     product = get_object_or_404(Product, id=id)
     form = ProductForms(instance=product)
@@ -59,7 +62,7 @@ def product_update(request, id):
     }
     return render(request, 'product/update.html', context)
 
-# ✅ ADD THIS - Product Delete
+@login_required(login_url='/user/login')
 def product_delete(request, id):
     product = get_object_or_404(Product, id=id)
     product.delete()

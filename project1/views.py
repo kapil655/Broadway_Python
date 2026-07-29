@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from project1.forms import DatastoreForm
 from project1.models import datastore  # Note: lowercase 'd'
+from django.contrib.auth.decorators import login_required
 
+
+@login_required(login_url='/user/login')
 def create_student(request):
     if request.method == "POST":
         form = DatastoreForm(request.POST)
@@ -15,7 +18,7 @@ def create_student(request):
     
     return render(request, 'projects/creat.html', {'form': form})
 
-
+@login_required(login_url='/user/login')
 def view_student(request):
     students = datastore.objects.all().order_by("id")
 
@@ -36,7 +39,7 @@ def view_student(request):
 
 
 
-
+@login_required(login_url='/user/login')
 def delete_student(request, id):
     student = datastore.objects.get(id=id)
 

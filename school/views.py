@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from . import models
 from .forms import StudentForms, GradeForm
 from user.models import UserImage
+from django.contrib.auth.decorators import login_required
 
 
 # =========================
@@ -73,7 +74,7 @@ def student_delete(request, id):
 
 
 # GRADE CRUD
-
+@login_required(login_url='/user/login')
 def grade_list(request):
     data = models.Grade.objects.all()
     context = {
@@ -82,7 +83,7 @@ def grade_list(request):
     return render(request, "grade/index.html", context)
 
 
-
+@login_required(login_url='/user/login')
 def grade_create(request):
     form = GradeForm()
     if request.method == "POST":
@@ -96,7 +97,7 @@ def grade_create(request):
     return render(request, "grade/create.html", context)
 
 
-
+@login_required(login_url='/user/login')
 def grade_update(request, id):
     grade = models.Grade.objects.get(id=id)
     form = GradeForm(instance=grade)
@@ -111,7 +112,7 @@ def grade_update(request, id):
     return render(request, "grade/update.html", context)
 
 
-
+@login_required(login_url='/user/login')
 def grade_delete(request, id):
     grade = models.Grade.objects.get(id=id)
     if request.method == "POST":
@@ -121,7 +122,7 @@ def grade_delete(request, id):
         "grade": grade
     }
     return render(request, "grade/delete.html", context)
-
+@login_required(login_url='/user/login')
 def user_image(request):
     data = UserImage.objects.all()
     context = {"user": data}

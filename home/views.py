@@ -4,6 +4,8 @@ from home.forms import ProjectForm
 from home.models import Project
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.contrib.auth.decorators import login_required
+
 def home(request):
     data = request.GET
     name = data.get('name', 'default')
@@ -17,7 +19,7 @@ def Json_data(request):
     return JsonResponse(data)
 
 
-
+@login_required(login_url='/user/login')
 def project_list(request):
     data = Project.objects.all()
     context = {
@@ -27,7 +29,7 @@ def project_list(request):
 
 
 
-
+@login_required(login_url='/user/login')
 def project_create(request):
     form = ProjectForm()
     if request.method == "POST":
@@ -43,7 +45,7 @@ def project_create(request):
 
 
 
-
+@login_required(login_url='/user/login')
 def project_update(request, id):
     project = Project.objects.get(id=id)
     form = ProjectForm(instance=project)
@@ -62,14 +64,14 @@ def project_update(request, id):
 
 
 
-
+@login_required(login_url='/user/login')
 def project_delete(request, id):
     project = Project.objects.get(id=id)
     project.delete()
     return redirect('project-list/')  
 
 
-
+@login_required(login_url='/user/login')
 def dashboard(request):
     return render(request, 'base/dashboard.html')
 
@@ -78,12 +80,12 @@ def dashboard(request):
 # <app:name>/<modelname_list>.html
 
 
-    
+
 class ProjectListView(ListView):
     model = Project
     context_object_name = "project"
     template_name ='projects/index.html' # <app:name>/<modelname_list>.html
-    context_object_name = "projects" # by default : objects_list
+     # by default : objects_list
 
 
 
@@ -101,6 +103,8 @@ class ProjectUpdateView(UpdateView):
     template_name = "projects/update.html"
     success_url = '/project/list'
     context_object_name = "form"
+
+
 
 class ProjectDeleteView(DeleteView):
     model = Project
