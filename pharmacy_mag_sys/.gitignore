@@ -1,16 +1,15 @@
 # Environment variables
 .env
-.env.*
+*.env
+
+# Virtual environment
+.venv/
+venv/
+env/
 
 # Python cache
 __pycache__/
-*.py[cod]
-
-# Virtual environment
-venv/
-env/
-.venv/
-
+*.pyc
 # Django files
 db.sqlite3
 *.log
@@ -26,6 +25,4 @@ db.sqlite3
 .DS_Store
 Thumbs.db
 
-env/
-venv/
-.venv/
+../venv/
