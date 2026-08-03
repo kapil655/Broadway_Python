@@ -26,3 +26,5 @@ db.sqlite3
 Thumbs.db
 
 ../venv/
+
+../django-jun-29
