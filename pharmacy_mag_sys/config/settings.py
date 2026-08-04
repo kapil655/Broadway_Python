@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     #peoject apps
     'apps.user',
     'apps.supplier',
+    'apps.medicine',
    
 
     #third-party apps

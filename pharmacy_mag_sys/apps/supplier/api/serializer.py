@@ -1,9 +1,30 @@
 from rest_framework import serializers  # type: ignore[import]
 
 from apps.supplier.models import Supplier
+from rest_framework.validators import ValidationError
 
 
+
+
+#forms field
 class SupplierSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required = True)
     class Meta:
         model = Supplier
         fields = '__all__'
+
+#name field
+def validate_company_name(self, company_name):
+        if len(company_name)<3:
+            raise ValidationError("Company name should be greater than 3")
+        return company_name
+
+#email-field
+def validate_email(self,email):
+        data = Supplier.objects.filter(email=email).exists()
+        if data:
+            raise ValidationError("Email should be unique")
+        return email
+
+
+    
