@@ -68,9 +68,13 @@ class UpdateMedicineView(GenericAPIView):
             return Response(serialzier.errors, status.HTTP_400_BAD_REQUEST)
 
 
+   
+
     def delete(self, request, id):
         data = get_object_or_404(Medicine, id=id)
         data.delete()
         return Response({
             "message":"Medicine deleted successfully"
         },status.HTTP_204_NO_CONTENT)
+
+    #now i have added some functions here in the code 
