@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
 class DosageForm(models.TextChoices):
     TABLET = "tablet", "Tablet"
     CAPSULE = "capsule", "Capsule"
@@ -29,7 +27,6 @@ class DosageForm(models.TextChoices):
     NASAL_SPRAY = "nasal_spray", "Nasal Spray"
     IV_FLUID = "iv_fluid", "IV Fluid"
 
-
 class MedicineStatus(models.TextChoices):
     ACTIVE = "active", "Active"
     INACTIVE = "inactive", "Inactive"
@@ -37,6 +34,7 @@ class MedicineStatus(models.TextChoices):
     DISCONTINUED = "discontinued", "Discontinued"
     EXPIRED = "expired", "Expired"
 
+# Create your models here.
 class Medicine(models.Model):
     name = models.CharField(max_length=80, verbose_name="Medicine Name")
     generic_name = models.CharField(max_length=100, blank=True)
@@ -56,10 +54,8 @@ class Medicine(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
     def __str__(self):
         return self.name
-
 
     class Meta:
         db_table = "medicine"

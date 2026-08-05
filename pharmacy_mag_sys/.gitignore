@@ -28,3 +28,4 @@ Thumbs.db
 ../venv/
 
 ../django-jun-29
+db.sqlite3
