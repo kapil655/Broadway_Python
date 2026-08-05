@@ -3,3 +3,6 @@ python_broadway/
 django-5/
 __pycache__/
 *.pyc
+pythonfiles/
+django-jun-29/
+jun-30-html/
