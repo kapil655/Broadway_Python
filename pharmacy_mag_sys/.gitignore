@@ -57,3 +57,5 @@ htmlcov/
 # Optional: If using Poetry or Pipenv
 # poetry.lock
 # Pipfile.lock
+
+.gitignore
