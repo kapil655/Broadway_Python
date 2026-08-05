@@ -25,3 +25,6 @@ class MedicineView(GenericAPIView):
             })
         else:
             return Response(serializer.errors)
+
+
+        
