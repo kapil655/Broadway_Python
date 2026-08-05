@@ -6,13 +6,26 @@
 .venv/
 venv/
 env/
+ENV/
 
 # Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
 # Django files
 db.sqlite3
 *.log
+/media/
+/static/
+*.pot
 
 # TOML files
 *.toml
@@ -20,12 +33,27 @@ db.sqlite3
 # IDE files
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
 # OS files
 .DS_Store
 Thumbs.db
+desktop.ini
 
-../venv/
+# Testing
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-../django-jun-29
-db.sqlite3
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Optional: If using Poetry or Pipenv
+# poetry.lock
+# Pipfile.lock
