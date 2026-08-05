@@ -6,3 +6,4 @@ class MedicineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medicine
         exclude = ['purchase_price']
+        
