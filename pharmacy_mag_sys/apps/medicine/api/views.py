@@ -76,5 +76,5 @@ class UpdateMedicineView(GenericAPIView):
         return Response({
             "message":"Medicine deleted successfully"
         },status.HTTP_204_NO_CONTENT)
-
-    #now i have added some functions here in the code 
+    
+    

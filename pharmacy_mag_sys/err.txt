@@ -1,0 +1,2 @@
+CommandError: Destination directory 'D:\broadway\pharmacy_mag_sys\apps\details' does not exist, please create it first.
+(pharmacy-mag-sys) PS D:\broadway\pharmacy_mag_sys> 
