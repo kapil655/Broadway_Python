@@ -2,8 +2,8 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from apps.medicine.api.serializer import MedicineSerializer
-from apps.medicine.models import Medicine
+from apps.medicine.api.serializer import MedicineSerializer,CategorySerializer
+from apps.medicine.models import Category, Medicine
 
 from django.shortcuts import get_object_or_404
 
@@ -76,5 +76,16 @@ class UpdateMedicineView(GenericAPIView):
         return Response({
             "message":"Medicine deleted successfully"
         },status.HTTP_204_NO_CONTENT)
-    
+
+
+
+    #category added
+class CategoryView(GenericAPIView):
+        queryset = Category
+        serializer_class = CategorySerializer
+
+        def get(self, request, *args, **kwargs):
+            data = Category.objects.all()
+            serializer = self.get_serializer(data, many=True)
+            return Response(serializer.data)
     
