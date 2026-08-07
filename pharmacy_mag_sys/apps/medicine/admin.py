@@ -71,7 +71,7 @@ class MedicineAdmin(admin.ModelAdmin):
                     "reorder_level",
                     "storage_location",
                     ("manufacture_date", "expiry_date"),
-                    "status","Category",
+                    "status","category",
                 )
             },
         ),

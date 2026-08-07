@@ -48,7 +48,9 @@ class MedicineStatus(models.TextChoices):
 # Create your models here.
 class Medicine(models.Model):
     name = models.CharField(max_length=80, verbose_name="Medicine Name")
+
     category = models.ForeignKey(Category,on_delete=models.CASCADE,null=True,blank=True)
+    
     generic_name = models.CharField(max_length=100, blank=True)
     brand_name = models.CharField(max_length=100, blank=True)
     medicine_code = models.IntegerField(unique=True)

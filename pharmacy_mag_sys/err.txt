@@ -1,2 +1,24 @@
+(pharmacy-mag-sys) PS D:\broadway\pharmacy_mag_sys> python manage.py startapp details apps/details
 CommandError: Destination directory 'D:\broadway\pharmacy_mag_sys\apps\details' does not exist, please create it first.
-(pharmacy-mag-sys) PS D:\broadway\pharmacy_mag_sys> 
+
+
+
+
+1.models.py 
+(api)2.seriializer.py
+(api)3.url.py 
+(api)4.view.py
+
+
+category 
+class PatientDetails(models.Model):
+    patient_name = models.CharField(max_length=100)
+    patient_address = models.CharField(max_length=255)
+    patient_problem = models.CharField(max_length=255)
+    patient_description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.patient_name
+
+    class Meta:
+        db_table = "patient_details"
