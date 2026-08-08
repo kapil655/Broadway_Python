@@ -1,47 +1,65 @@
 from django.contrib import admin
-from apps.pharmacy.models import District, Pharmacy
+from .models import District, Pharmacy
 
-# Register your models here.
 
+@admin.register(District)
 class DistrictAdmin(admin.ModelAdmin):
-    list_display = ['district_id', 'name']
-    search_fields = ['name']
-    ordering = ['district_id']
+    list_display = ("district_id", "name")
+    search_fields = ("name",)
+    ordering = ("district_id",)
 
+
+@admin.register(Pharmacy)
 class PharmacyAdmin(admin.ModelAdmin):
-    list_display = ['name', 'registration_number', 'email', 'phone', 'district', 'city', 'status']
-    list_filter = ['status', 'district', 'city']
-    search_fields = ['name', 'registration_number', 'email', 'phone']
-    ordering = ['name']
-    date_hierarchy = "created_at"
-    
-    readonly_fields = (
+    list_display = (
+        "name",
+        "registration_number",
+        "email",
+        "phone",
+        "city",
+        "district",
+        "status",
+        "opening_time",
+        "closing_time",
         "created_at",
-        "updated_at",
     )
-    
+    list_filter = ("status", "district", "city", "created_at")
+    search_fields = (
+        "name",
+        "registration_number",
+        "email",
+        "phone",
+        "city",
+    )
+    ordering = ("name",)
+    list_per_page = 20
+
     fieldsets = (
-        ('Basic Information', {
-            'fields': ('name', 'registration_number', 'email', 'phone', 'website')
+        ("Basic Information", {
+            "fields": (
+                "name",
+                "registration_number",
+                "email",
+                "phone",
+                "website",
+            )
         }),
-        ('Location Details', {
-            'fields': ('address', 'city', 'district', 'country')
+        ("Location", {
+            "fields": (
+                "address",
+                "city",
+                "district",
+            )
         }),
-        ('Timing', {
-            'fields': ('opening_time', 'closing_time')
+        ("Business Hours", {
+            "fields": (
+                "opening_time",
+                "closing_time",
+            )
         }),
-        # Removed the incorrectly formatted Medicine Information section
-        # If you want to add Medicine information, you need to create a Medicine model first
-        # and use inline admin
-        ('Status', {
-            'fields': ('status',)
-        }),
-        ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',)
+        ("Status", {
+            "fields": ("status",)
         }),
     )
 
-# Register models with admin
-admin.site.register(District, DistrictAdmin)
-admin.site.register(Pharmacy, PharmacyAdmin)
+    readonly_fields = ("created_at", "updated_at")

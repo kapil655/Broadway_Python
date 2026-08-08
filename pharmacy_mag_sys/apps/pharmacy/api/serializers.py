@@ -1,19 +1,22 @@
+# apps/pharmacy/api/serializers.py
 from rest_framework import serializers
+from apps.pharmacy.models import Pharmacy, District
 
-from apps.pharmacy.models import Pharmacy
+
+class DistrictSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = District
+        fields = ['district_id', 'name']
+
 
 class PharmacySerializer(serializers.ModelSerializer):
+    district_name = serializers.CharField(source='district.name', read_only=True)
+    
     class Meta:
         model = Pharmacy
-        fields = '__all__'  
-
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-
-        if instance.district:
-            data['district_name'] = instance.district.name
-        else:
-            data['district_name'] = None
-
-        return data
-        
+        fields = [
+            'id', 'name', 'registration_number', 'email', 'phone', 
+            'website', 'address', 'city', 'district', 'district_name',
+            'opening_time', 'closing_time', 'status', 'created_at', 'updated_at'
+        ]
+        read_only_fields = ['created_at', 'updated_at']

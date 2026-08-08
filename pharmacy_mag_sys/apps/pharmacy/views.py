@@ -1,3 +1,34 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from apps.pharmacy.models import Pharmacy
+from apps.pharmacy.form import PharmacyForm
 
-# Create your views here.
+class PharmacyListView(View):
+    def get(self, request):
+        pharmacies = Pharmacy.objects.all()
+        context = {"pharmacies": pharmacies}
+        return render(request, "pharmacy/list.html", context)
+
+class PharmacyCreateView(CreateView):
+    model = Pharmacy
+    form_class = PharmacyForm
+    template_name = "pharmacy/create.html"
+    success_url = reverse_lazy("pharmacy_list")
+
+class PharmacyUpdateView(UpdateView):
+    model = Pharmacy
+    form_class = PharmacyForm
+    template_name = "pharmacy/create.html"
+    success_url = reverse_lazy("pharmacy_list")
+
+class PharmacyDeleteView(DeleteView):
+    model = Pharmacy
+    template_name = "pharmacy/delete.html"
+    success_url = reverse_lazy("pharmacy_list")
+
+class PharmacyDetailView(DetailView):
+    model = Pharmacy
+    template_name = "pharmacy/detail.html"
+    context_object_name = "pharmacy"
