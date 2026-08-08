@@ -1,0 +1,21 @@
+<h1>{{ medicine.name }}</h1>
+
+<p><strong>Category:</strong> {{ medicine.category }}</p>
+<p><strong>Generic Name:</strong> {{ medicine.generic_name }}</p>
+<p><strong>Brand Name:</strong> {{ medicine.brand_name }}</p>
+<p><strong>Medicine Code:</strong> {{ medicine.medicine_code }}</p>
+<p><strong>Dosage Form:</strong> {{ medicine.get_dosage_form_display }}</p>
+<p><strong>Strength:</strong> {{ medicine.strength }}</p>
+<p><strong>Barcode:</strong> {{ medicine.barcode }}</p>
+<p><strong>Purchase Price:</strong> {{ medicine.purchase_price }}</p>
+<p><strong>Selling Price:</strong> {{ medicine.selling_price }}</p>
+<p><strong>Tax Rate:</strong> {{ medicine.tax_rate }}%</p>
+<p><strong>Reorder Level:</strong> {{ medicine.reorder_level }}</p>
+<p><strong>Storage Location:</strong> {{ medicine.storage_location }}</p>
+<p><strong>Manufacture Date:</strong> {{ medicine.manufacture_date }}</p>
+<p><strong>Expiry Date:</strong> {{ medicine.expiry_date }}</p>
+<p><strong>Status:</strong> {{ medicine.get_status_display }}</p>
+
+<a href="{% url 'medicine-list' %}">
+    Back to List
+</a>
