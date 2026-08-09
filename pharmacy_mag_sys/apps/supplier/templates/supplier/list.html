@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suppliers</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+<div class="max-w-7xl mx-auto px-6 py-10">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">
+                Suppliers
+            </h1>
+
+            <p class="text-gray-500 mt-1">
+                Manage your suppliers
+            </p>
+        </div>
+
+        <a href="{% url 'supplier-create' %}"
+           class="px-5 py-2.5 bg-blue-600 text-white rounded-lg
+                  hover:bg-blue-700 transition">
+            + Add Supplier
+        </a>
+
+    </div>
+
+    <!-- Supplier Table -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full text-left">
+
+                <thead class="bg-gray-800 text-white">
+
+                    <tr>
+                        <th class="px-6 py-4">#</th>
+                        <th class="px-6 py-4">Company</th>
+                        <th class="px-6 py-4">Contact Person</th>
+                        <th class="px-6 py-4">Email</th>
+                        <th class="px-6 py-4">Phone</th>
+                        <th class="px-6 py-4">Status</th>
+                        <th class="px-6 py-4 text-center">Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody class="divide-y divide-gray-200">
+
+                    {% for supplier in suppliers %}
+
+                    <tr class="hover:bg-gray-50">
+
+                        <td class="px-6 py-4">
+                            {{ forloop.counter }}
+                        </td>
+
+                        <td class="px-6 py-4 font-semibold text-gray-800">
+                            {{ supplier.company_name }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ supplier.contact_person }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ supplier.email|default:"-" }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ supplier.phone }}
+                        </td>
+
+                        <td class="px-6 py-4">
+
+                            {% if supplier.status %}
+                                <span class="px-3 py-1 text-sm rounded-full
+                                             bg-green-100 text-green-700">
+                                    Active
+                                </span>
+                            {% else %}
+                                <span class="px-3 py-1 text-sm rounded-full
+                                             bg-red-100 text-red-700">
+                                    Inactive
+                                </span>
+                            {% endif %}
+
+                        </td>
+
+                        <td class="px-6 py-4">
+
+                            <div class="flex justify-center gap-2">
+
+                                <a href="{% url 'supplier-detail' supplier.id %}"
+                                   class="px-3 py-1.5 bg-blue-100 text-blue-700
+                                          rounded-lg hover:bg-blue-200">
+                                    View
+                                </a>
+
+                                <a href="{% url 'supplier-update' supplier.id %}"
+                                   class="px-3 py-1.5 bg-yellow-100 text-yellow-700
+                                          rounded-lg hover:bg-yellow-200">
+                                    Edit
+                                </a>
+
+                                <a href="{% url 'supplier-delete' supplier.id %}"
+                                   class="px-3 py-1.5 bg-red-100 text-red-700
+                                          rounded-lg hover:bg-red-200">
+                                    Delete
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="7"
+                            class="px-6 py-10 text-center text-gray-500">
+                            No suppliers found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Supplier</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+<div class="min-h-screen flex items-center justify-center px-6">
+
+    <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-8 text-center">
+
+        <!-- Warning -->
+        <div class="mx-auto w-16 h-16 flex items-center justify-center
+                    bg-red-100 rounded-full mb-5">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-8 h-8 text-red-600"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor">
+
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 9v4m0 4h.01M10.29 3.86l-7.82 13.5A2 2 0 004.2 21h15.6a2 2 0 001.73-3.64l-7.82-13.5a2 2 0 00-3.42 0z" />
+
+            </svg>
+
+        </div>
+
+        <h1 class="text-2xl font-bold text-gray-800 mb-3">
+            Delete Supplier?
+        </h1>
+
+        <p class="text-gray-600 mb-2">
+            Are you sure you want to delete:
+        </p>
+
+        <p class="text-lg font-semibold text-gray-900 mb-6">
+            {{ supplier.company_name }}
+        </p>
+
+        <p class="text-sm text-gray-500 mb-8">
+            This action cannot be undone.
+        </p>
+
+        <!-- Form -->
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="flex justify-center gap-3">
+
+                <a href="{% url 'supplier-list' %}"
+                   class="px-5 py-2.5 bg-gray-200 text-gray-700
+                          rounded-lg hover:bg-gray-300 transition">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="px-5 py-2.5 bg-red-600 text-white
+                               rounded-lg hover:bg-red-700 transition">
+                    Yes, Delete
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

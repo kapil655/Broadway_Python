@@ -1,7 +1,7 @@
 from django.views.generic import (CreateView,ListView,DeleteView,DetailView,UpdateView)
 
 from apps.medicine.forms import MedicineForm
-from apps.medicine.models import Medicine
+from apps.medicine.models import Category, Medicine
 
 
 class MedicineList(ListView):
@@ -34,3 +34,8 @@ class MedicineDetailView(DetailView):
     model = Medicine
     template_name = "medicine/detail.html"
     context_object_name = "medicine"
+
+
+
+
+

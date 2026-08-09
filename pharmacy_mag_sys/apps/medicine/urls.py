@@ -11,24 +11,11 @@ from apps.medicine.views import (
 
 urlpatterns = [
     path("list", MedicineList.as_view(), name="medicine-list"),
-
     path("create", MedicineCreateView.as_view(), name="medicine-create"),
+    path("update/<int:pk>",MedicineUpdateView.as_view(),name="medicine-update"),
+    path("detail/<int:pk>",MedicineDetailView.as_view(),name="medicine-detail"),
+    path("delete/<int:pk>",MedicineDeleteView.as_view(),name="medicine-delete"),
 
-    path(
-        "update/<int:pk>",
-        MedicineUpdateView.as_view(),
-        name="medicine-update",
-    ),
-
-    path(
-        "detail/<int:pk>",
-        MedicineDetailView.as_view(),
-        name="medicine-detail",
-    ),
-
-    path(
-        "delete/<int:pk>",
-        MedicineDeleteView.as_view(),
-        name="medicine-delete",
-    ),
+    
+    
 ]

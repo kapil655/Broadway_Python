@@ -1,11 +1,10 @@
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
 
 from apps.medicine.api.serializer import MedicineSerializer,CategorySerializer
 from apps.medicine.models import Category, Medicine
 
-from django.shortcuts import get_object_or_404
 
 
 class MedicineView(GenericAPIView):

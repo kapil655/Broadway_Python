@@ -1,21 +1,262 @@
-<h1>{{ medicine.name }}</h1>
+<style>
+    ```css
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-<p><strong>Category:</strong> {{ medicine.category }}</p>
-<p><strong>Generic Name:</strong> {{ medicine.generic_name }}</p>
-<p><strong>Brand Name:</strong> {{ medicine.brand_name }}</p>
-<p><strong>Medicine Code:</strong> {{ medicine.medicine_code }}</p>
-<p><strong>Dosage Form:</strong> {{ medicine.get_dosage_form_display }}</p>
-<p><strong>Strength:</strong> {{ medicine.strength }}</p>
-<p><strong>Barcode:</strong> {{ medicine.barcode }}</p>
-<p><strong>Purchase Price:</strong> {{ medicine.purchase_price }}</p>
-<p><strong>Selling Price:</strong> {{ medicine.selling_price }}</p>
-<p><strong>Tax Rate:</strong> {{ medicine.tax_rate }}%</p>
-<p><strong>Reorder Level:</strong> {{ medicine.reorder_level }}</p>
-<p><strong>Storage Location:</strong> {{ medicine.storage_location }}</p>
-<p><strong>Manufacture Date:</strong> {{ medicine.manufacture_date }}</p>
-<p><strong>Expiry Date:</strong> {{ medicine.expiry_date }}</p>
-<p><strong>Status:</strong> {{ medicine.get_status_display }}</p>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+    min-height: 100vh;
+}
 
-<a href="{% url 'medicine-list' %}">
-    Back to List
-</a>
+/* Main container */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 50px auto;
+}
+
+/* Medicine card */
+.medicine-card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 35px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.header h1 {
+    font-size: 32px;
+    color: #1e3a8a;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #6b7280;
+    font-size: 15px;
+}
+
+/* Status */
+.status {
+    background: #dcfce7;
+    color: #166534;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Details grid */
+.details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* Individual detail */
+.detail-item {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Actions */
+.actions {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.back-btn {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+
+    .container {
+        width: 95%;
+        margin: 25px auto;
+    }
+
+    .medicine-card {
+        padding: 20px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .header h1 {
+        font-size: 25px;
+    }
+
+    .details {
+        grid-template-columns: 1fr;
+    }
+}
+```
+
+</style>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ medicine.name }} - Medicine Details</title>
+
+    <link rel="stylesheet" href="{% static 'css/medicine_detail.css' %}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="medicine-card">
+
+        <div class="header">
+            <div>
+                <h1>{{ medicine.name }}</h1>
+                <p class="subtitle">Medicine Details</p>
+            </div>
+
+            <span class="status">
+                {{ medicine.get_status_display }}
+            </span>
+        </div>
+
+        <div class="details">
+
+            <div class="detail-item">
+                <span class="label">Category</span>
+                <span class="value">{{ medicine.category }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Generic Name</span>
+                <span class="value">{{ medicine.generic_name }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Brand Name</span>
+                <span class="value">{{ medicine.brand_name }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Medicine Code</span>
+                <span class="value">{{ medicine.medicine_code }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Dosage Form</span>
+                <span class="value">{{ medicine.get_dosage_form_display }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Strength</span>
+                <span class="value">{{ medicine.strength }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Barcode</span>
+                <span class="value">{{ medicine.barcode }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Purchase Price</span>
+                <span class="value">Rs. {{ medicine.purchase_price }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Selling Price</span>
+                <span class="value">Rs. {{ medicine.selling_price }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Tax Rate</span>
+                <span class="value">{{ medicine.tax_rate }}%</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Reorder Level</span>
+                <span class="value">{{ medicine.reorder_level }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Storage Location</span>
+                <span class="value">{{ medicine.storage_location }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Manufacture Date</span>
+                <span class="value">{{ medicine.manufacture_date }}</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="label">Expiry Date</span>
+                <span class="value">{{ medicine.expiry_date }}</span>
+            </div>
+
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'medicine-list' %}" class="back-btn">
+                ← Back to Medicine List
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

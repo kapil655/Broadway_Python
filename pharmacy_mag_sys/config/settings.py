@@ -37,11 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #peoject apps
+    #project apps
     'apps.user',
     'apps.supplier',
     'apps.medicine',    
     'apps.pharmacy',
+    
    
 
     #third-party apps

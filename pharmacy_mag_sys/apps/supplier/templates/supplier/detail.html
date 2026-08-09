@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ supplier.company_name }}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+<div class="max-w-4xl mx-auto px-6 py-10">
+
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+
+        <!-- Header -->
+        <div class="bg-gray-800 px-8 py-6 text-white">
+
+            <h1 class="text-3xl font-bold">
+                {{ supplier.company_name }}
+            </h1>
+
+            <p class="text-gray-300 mt-1">
+                Supplier Details
+            </p>
+
+        </div>
+
+        <!-- Details -->
+        <div class="p-8">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Company Name
+                    </p>
+
+                    <p class="text-lg font-semibold text-gray-800">
+                        {{ supplier.company_name }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Contact Person
+                    </p>
+
+                    <p class="text-lg font-semibold text-gray-800">
+                        {{ supplier.contact_person }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Email
+                    </p>
+
+                    <p class="text-lg font-semibold text-gray-800">
+                        {{ supplier.email|default:"-" }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Phone
+                    </p>
+
+                    <p class="text-lg font-semibold text-gray-800">
+                        {{ supplier.phone }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Registration Number
+                    </p>
+
+                    <p class="text-lg font-semibold text-gray-800">
+                        {{ supplier.registration_num|default:"-" }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Payment Terms
+                    </p>
+
+                    <p class="text-lg font-semibold text-gray-800">
+                        {{ supplier.payment_terms|default:"-" }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Address
+                    </p>
+
+                    <p class="text-lg font-semibold text-gray-800">
+                        {{ supplier.address|default:"-" }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Status
+                    </p>
+
+                    {% if supplier.status %}
+                        <span class="inline-block mt-1 px-3 py-1
+                                     bg-green-100 text-green-700
+                                     rounded-full">
+                            Active
+                        </span>
+                    {% else %}
+                        <span class="inline-block mt-1 px-3 py-1
+                                     bg-red-100 text-red-700
+                                     rounded-full">
+                            Inactive
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <!-- Dates -->
+            <div class="mt-8 pt-6 border-t grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Created At
+                    </p>
+
+                    <p class="text-gray-800">
+                        {{ supplier.created_at|date:"M d, Y H:i" }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Last Updated
+                    </p>
+
+                    <p class="text-gray-800">
+                        {{ supplier.updated_at|date:"M d, Y H:i" }}
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-end gap-3 mt-8 pt-6 border-t">
+
+                <a href="{% url 'supplier-list' %}"
+                   class="px-5 py-2.5 bg-gray-200 text-gray-700
+                          rounded-lg hover:bg-gray-300">
+                    Back
+                </a>
+
+                <a href="{% url 'supplier-update' supplier.id %}"
+                   class="px-5 py-2.5 bg-yellow-500 text-white
+                          rounded-lg hover:bg-yellow-600">
+                    Edit
+                </a>
+
+                <a href="{% url 'supplier-delete' supplier.id %}"
+                   class="px-5 py-2.5 bg-red-600 text-white
+                          rounded-lg hover:bg-red-700">
+                    Delete
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
