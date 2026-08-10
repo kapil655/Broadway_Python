@@ -1,8 +1,10 @@
 from django.db import models
 
 class Category(models.Model):
-    name = models.CharField(max_length=10 , verbose_name="Category Name")
+    name = models.CharField(max_length=10,verbose_name="Category Name")
     is_active = models.BooleanField(default=False)
+    out_of_stock = models.BooleanField(default=False)
+    requires_prescription = models.TextField(default="Take medicine",verbose_name="Requires Prescription")
 
     def __str__(self):
         return self.name
@@ -37,7 +39,6 @@ class DosageForm(models.TextChoices):
     NASAL_DROPS = "nasal_drops", "Nasal Drops"
     NASAL_SPRAY = "nasal_spray", "Nasal Spray"
     IV_FLUID = "iv_fluid", "IV Fluid"
-
 class MedicineStatus(models.TextChoices):
     ACTIVE = "active", "Active"
     INACTIVE = "inactive", "Inactive"
@@ -48,9 +49,7 @@ class MedicineStatus(models.TextChoices):
 # Create your models here.
 class Medicine(models.Model):
     name = models.CharField(max_length=80, verbose_name="Medicine Name")
-
     category = models.ForeignKey(Category,on_delete=models.CASCADE,null=True,blank=True)
-    
     generic_name = models.CharField(max_length=100, blank=True)
     brand_name = models.CharField(max_length=100, blank=True)
     medicine_code = models.IntegerField(unique=True)

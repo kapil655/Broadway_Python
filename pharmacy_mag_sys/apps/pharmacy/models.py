@@ -16,7 +16,7 @@ class Pharmacy(models.Model):
     email = models.EmailField(max_length=50, unique=True, verbose_name="Email Address")
     phone = models.PositiveBigIntegerField(verbose_name="Phone Number")
     website = models.URLField(max_length=100, null=True, blank=True, verbose_name="Website")
-    address = models.CharField(max_length=50, verbose_name="Address")
+    address = models.CharField(max_length=150, verbose_name="Address",null=True,blank=True)
     city = models.CharField(max_length=50, verbose_name="City")
     district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True)
     opening_time = models.TimeField(verbose_name="Opening Time")

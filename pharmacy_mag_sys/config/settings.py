@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'apps.supplier',
     'apps.medicine',    
     'apps.pharmacy',
+        
     
    
 

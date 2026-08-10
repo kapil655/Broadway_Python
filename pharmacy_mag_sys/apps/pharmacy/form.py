@@ -1,5 +1,4 @@
 from django import forms
-
 from apps.pharmacy.models import Pharmacy
 
 

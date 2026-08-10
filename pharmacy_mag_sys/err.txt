@@ -5,7 +5,7 @@ CommandError: Destination directory 'D:\broadway\pharmacy_mag_sys\apps\details' 
 
 
 1.models.py 
-(api)2.seriializer.py
+(api)2.serializer.py
 (api)3.url.py 
 (api)4.view.py
 

@@ -1,0 +1,489 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pharmacy Dashboard</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="bg-blue-700 text-white shadow-md">
+
+        <div class="max-w-7xl mx-auto px-6 py-4
+                    flex justify-between items-center">
+
+            <!-- Logo / Title -->
+
+            <a href="{% url 'pharmacy_dashboard' %}"
+               class="text-2xl font-bold">
+
+                Pharmacy Management System
+
+            </a>
+
+
+            <!-- Dashboard -->
+
+            <a href="{% url 'pharmacy_dashboard' %}"
+               class="bg-blue-600 hover:bg-blue-500
+                      px-4 py-2 rounded-lg transition">
+
+                Dashboard
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+
+
+        <!-- ================= PAGE TITLE ================= -->
+
+        <div class="mb-8">
+
+            <h2 class="text-3xl font-bold text-gray-800">
+
+                Pharmacy Dashboard
+
+            </h2>
+
+            <p class="text-gray-500 mt-1">
+
+                Overview of your pharmacy management system
+
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= STATISTICS ================= -->
+
+        <div class="grid grid-cols-1 sm:grid-cols-2
+                    lg:grid-cols-4 gap-6">
+
+
+            <!-- TOTAL PHARMACIES -->
+
+            <div class="bg-white rounded-xl shadow-sm
+                        p-6 border-l-4 border-blue-500">
+
+                <div class="flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-gray-500 text-sm">
+
+                            Total Pharmacies
+
+                        </p>
+
+                        <h3 class="text-4xl font-bold
+                                   text-gray-800 mt-2">
+
+                            {{ total_pharmacies }}
+
+                        </h3>
+
+                    </div>
+
+
+                    <div class="bg-blue-100 text-blue-600
+                                p-3 rounded-full text-xl">
+
+                        🏥
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIVE PHARMACIES -->
+
+            <div class="bg-white rounded-xl shadow-sm
+                        p-6 border-l-4 border-green-500">
+
+                <div class="flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-gray-500 text-sm">
+
+                            Active Pharmacies
+
+                        </p>
+
+                        <h3 class="text-4xl font-bold
+                                   text-green-600 mt-2">
+
+                            {{ active_pharmacies }}
+
+                        </h3>
+
+                    </div>
+
+
+                    <div class="bg-green-100 text-green-600
+                                p-3 rounded-full text-xl">
+
+                        ✓
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- INACTIVE PHARMACIES -->
+
+            <div class="bg-white rounded-xl shadow-sm
+                        p-6 border-l-4 border-red-500">
+
+                <div class="flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-gray-500 text-sm">
+
+                            Inactive Pharmacies
+
+                        </p>
+
+                        <h3 class="text-4xl font-bold
+                                   text-red-600 mt-2">
+
+                            {{ inactive_pharmacies }}
+
+                        </h3>
+
+                    </div>
+
+
+                    <div class="bg-red-100 text-red-600
+                                p-3 rounded-full text-xl">
+
+                        !
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TOTAL DISTRICTS -->
+
+            <div class="bg-white rounded-xl shadow-sm
+                        p-6 border-l-4 border-purple-500">
+
+                <div class="flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-gray-500 text-sm">
+
+                            Total Districts
+
+                        </p>
+
+                        <h3 class="text-4xl font-bold
+                                   text-purple-600 mt-2">
+
+                            {{ total_districts }}
+
+                        </h3>
+
+                    </div>
+
+
+                    <div class="bg-purple-100 text-purple-600
+                                p-3 rounded-full text-xl">
+
+                        📍
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <div class="grid grid-cols-1 lg:grid-cols-2
+                    gap-6 mt-8">
+
+
+            <!-- ================= PHARMACIES BY DISTRICT ================= -->
+
+            <div class="bg-white rounded-xl shadow-sm">
+
+
+                <!-- Header -->
+
+                <div class="px-6 py-5 border-b">
+
+                    <h3 class="text-xl font-bold text-gray-800">
+
+                        Pharmacies by District
+
+                    </h3>
+
+                    <p class="text-sm text-gray-500 mt-1">
+
+                        Number of pharmacies in each district
+
+                    </p>
+
+                </div>
+
+
+                <!-- District List -->
+
+                <div class="p-6">
+
+                    {% for district in pharmacies_by_district %}
+
+                    <div class="flex justify-between items-center
+                                py-3 border-b last:border-b-0">
+
+
+                        <!-- District Name -->
+
+                        <div class="flex items-center gap-3">
+
+                            <div class="w-9 h-9 bg-blue-100
+                                        text-blue-600 rounded-full
+                                        flex items-center justify-center">
+
+                                📍
+
+                            </div>
+
+                            <span class="font-medium text-gray-700">
+
+                                {{ district.name }}
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- Pharmacy Count -->
+
+                        <span class="bg-blue-100 text-blue-700
+                                     px-3 py-1 rounded-full
+                                     text-sm font-semibold">
+
+                            {{ district.pharmacy_count }}
+
+                        </span>
+
+                    </div>
+
+                    {% empty %}
+
+                    <p class="text-gray-500 text-center py-6">
+
+                        No district data available.
+
+                    </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= RECENT PHARMACIES ================= -->
+
+            <div class="bg-white rounded-xl shadow-sm">
+
+
+                <!-- Header -->
+
+                <div class="px-6 py-5 border-b">
+
+                    <h3 class="text-xl font-bold text-gray-800">
+
+                        Recent Pharmacies
+
+                    </h3>
+
+                    <p class="text-sm text-gray-500 mt-1">
+
+                        Recently registered pharmacies
+
+                    </p>
+
+                </div>
+
+
+                <!-- Pharmacy List -->
+
+                <div class="p-6">
+
+                    {% for pharmacy in recent_pharmacies %}
+
+                    <div class="flex justify-between items-center
+                                py-3 border-b last:border-b-0">
+
+
+                        <!-- Pharmacy Information -->
+
+                        <div>
+
+                            <p class="font-semibold text-gray-800">
+
+                                {{ pharmacy.name }}
+
+                            </p>
+
+                            <p class="text-sm text-gray-500">
+
+                                {{ pharmacy.city }}
+
+                                {% if pharmacy.district %}
+
+                                    , {{ pharmacy.district.name }}
+
+                                {% endif %}
+
+                            </p>
+
+                        </div>
+
+
+                        <!-- Status -->
+
+                        {% if pharmacy.status %}
+
+                        <span class="bg-green-100 text-green-700
+                                     px-3 py-1 rounded-full
+                                     text-xs font-semibold">
+
+                            Active
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="bg-red-100 text-red-700
+                                     px-3 py-1 rounded-full
+                                     text-xs font-semibold">
+
+                            Inactive
+
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                    {% empty %}
+
+                    <p class="text-gray-500 text-center py-6">
+
+                        No pharmacies available.
+
+                    </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= QUICK ACTIONS ================= -->
+
+        <div class="bg-white rounded-xl shadow-sm
+                    mt-8 p-6">
+
+
+            <h3 class="text-xl font-bold text-gray-800 mb-5">
+
+                Quick Actions
+
+            </h3>
+
+
+            <div class="flex flex-wrap gap-4">
+
+
+                <!-- Add Pharmacy -->
+
+                <a href="{% url 'pharmacy_create' %}"
+                   class="bg-blue-600 hover:bg-blue-700
+                          text-white px-5 py-3 rounded-lg
+                          font-medium transition">
+
+                    + Add Pharmacy
+
+                </a>
+
+
+                <!-- View Pharmacies -->
+
+                <a href="{% url 'pharmacy_list' %}"
+                   class="bg-gray-700 hover:bg-gray-800
+                          text-white px-5 py-3 rounded-lg
+                          font-medium transition">
+
+                    View Pharmacies
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+
+
+
+    <footer class="text-center text-gray-500 text-sm py-6">
+
+        Pharmacy Management System © 2026
+
+    </footer>
+
+
+</body>
+
+</html>
+```
