@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Customer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+        }
+        .form-control.error {
+            border-color: #dc3545;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .alert {
+            padding: 12px;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .required {
+            color: #dc3545;
+        }
+        .help-text {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create New Customer</h1>
+
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'customer-create' %}">
+            {% csrf_token %}
+
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="full_name">Full Name <span class="required">*</span></label>
+                <input type="text" id="full_name" name="full_name" class="form-control {% if form.full_name.errors %}error{% endif %}" 
+                       value="{{ form.full_name.value|default:'' }}" required maxlength="50">
+                {% if form.full_name.errors %}
+                    <div class="error-message">{{ form.full_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <!-- Phone -->
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="number" id="phone" name="phone" class="form-control {% if form.phone.errors %}error{% endif %}" 
+                           value="{{ form.phone.value|default:'' }}" required>
+                    {% if form.phone.errors %}
+                        <div class="error-message">{{ form.phone.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" class="form-control {% if form.email.errors %}error{% endif %}" 
+                           value="{{ form.email.value|default:'' }}" required maxlength="50">
+                    {% if form.email.errors %}
+                        <div class="error-message">{{ form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Date of Birth -->
+                <div class="form-group">
+                    <label for="date_of_birth">Date of Birth <span class="required">*</span></label>
+                    <input type="date" id="date_of_birth" name="date_of_birth" class="form-control {% if form.date_of_birth.errors %}error{% endif %}" 
+                           value="{{ form.date_of_birth.value|default:'' }}" required>
+                    {% if form.date_of_birth.errors %}
+                        <div class="error-message">{{ form.date_of_birth.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Gender -->
+                <div class="form-group">
+                    <label for="gender">Gender <span class="required">*</span></label>
+                    <select id="gender" name="gender" class="form-control {% if form.gender.errors %}error{% endif %}" required>
+                        <option value="">Select Gender</option>
+                        <option value="male" {% if form.gender.value == 'male' %}selected{% endif %}>Male</option>
+                        <option value="female" {% if form.gender.value == 'female' %}selected{% endif %}>Female</option>
+                        <option value="others" {% if form.gender.value == 'others' %}selected{% endif %}>Others</option>
+                    </select>
+                    {% if form.gender.errors %}
+                        <div class="error-message">{{ form.gender.errors.0 }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label for="address">Address <span class="required">*</span></label>
+                <input type="text" id="address" name="address" class="form-control {% if form.address.errors %}error{% endif %}" 
+                       value="{{ form.address.value|default:'' }}" required maxlength="100">
+                {% if form.address.errors %}
+                    <div class="error-message">{{ form.address.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Emergency Contact -->
+            <div class="form-group">
+                <label for="emergency_contact">Emergency Contact</label>
+                <input type="number" id="emergency_contact" name="emergency_contact" class="form-control {% if form.emergency_contact.errors %}error{% endif %}" 
+                       value="{{ form.emergency_contact.value|default:'' }}">
+                <div class="help-text">Optional field for emergency contact number</div>
+                {% if form.emergency_contact.errors %}
+                    <div class="error-message">{{ form.emergency_contact.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Status -->
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status" class="form-control {% if form.status.errors %}error{% endif %}">
+                    <option value="active" {% if form.status.value == 'active' or not form.status.value %}selected{% endif %}>Active</option>
+                    <option value="inactive" {% if form.status.value == 'inactive' %}selected{% endif %}>Inactive</option>
+                </select>
+                {% if form.status.errors %}
+                    <div class="error-message">{{ form.status.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Create Customer</button>
+                <a href="{% url 'customerlist' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
