@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subject List</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="w3-container w3-padding-32">
+        <div class="w3-card-4 w3-white w3-padding w3-round">
+            
+            <!-- Header -->
+            <div class="w3-row w3-margin-bottom">
+                <div class="w3-col s8">
+                    <h2><i class="fa fa-book"></i> Subjects <span class="w3-tag w3-blue w3-round">{{ subjects|length }}</span></h2>
+                </div>
+                <div class="w3-col s4 w3-right-align">
+                    <a href="{% url 'subject_create' %}" class="w3-btn w3-blue w3-round">
+                        <i class="fa fa-plus"></i> Add Subject
+                    </a>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="w3-panel w3-green w3-round">
+                        <i class="fa fa-check-circle"></i> {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Table -->
+            {% if subjects %}
+                <div class="w3-responsive">
+                    <table class="w3-table w3-striped w3-bordered w3-hoverable">
+                        <thead>
+                            <tr class="w3-blue">
+                                <th>ID</th>
+                                <th>Code</th>
+                                <th>Subject Name</th>
+                                <th>Class</th>
+                                <th>Teacher</th>
+                                <th>Type</th>
+                                <th>Credits</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for subject in subjects %}
+                                <tr>
+                                    <td>{{ subject.id }}</td>
+                                    <td><span class="w3-tag w3-blue w3-round">{{ subject.subject_code }}</span></td>
+                                    <td>{{ subject.subject_name }}</td>
+                                    <td>{{ subject.class_name }}</td>
+                                    <td>
+                                        {% if subject.teacher %}
+                                            {{ subject.teacher.first_name }} {{ subject.teacher.last_name }}
+                                        {% else %}
+                                            <span class="w3-text-grey">Not Assigned</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <span class="w3-tag w3-{% if subject.subject_type == 'theory' %}blue{% elif subject.subject_type == 'practical' %}green{% elif subject.subject_type == 'lab' %}orange{% else %}purple{% endif %} w3-round">
+                                            {{ subject.get_subject_type_display }}
+                                        </span>
+                                    </td>
+                                    <td>{{ subject.credit_hours }}</td>
+                                    <td>
+                                        {% if subject.is_active %}
+                                            <span class="w3-tag w3-green w3-round">Active</span>
+                                        {% else %}
+                                            <span class="w3-tag w3-red w3-round">Inactive</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'subject_detail' subject.id %}" class="w3-btn w3-blue w3-small w3-round">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        <a href="{% url 'subject_update' subject.id %}" class="w3-btn w3-amber w3-small w3-round">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'subject_delete' subject.id %}" class="w3-btn w3-red w3-small w3-round" 
+                                           onclick="return confirm('Are you sure you want to delete this subject?')">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="w3-center w3-padding-64">
+                    <i class="fa fa-book" style="font-size:64px;color:#ccc;"></i>
+                    <h3>No subjects found</h3>
+                    <p>Start by adding your first subject.</p>
+                    <a href="{% url 'subject_create' %}" class="w3-btn w3-blue w3-round">
+                        <i class="fa fa-plus"></i> Add First Subject
+                    </a>
+                </div>
+            {% endif %}
+            
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Teacher</title>
+    <style>
+        body { font-family: Arial; background: linear-gradient(135deg, #667eea, #764ba2); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .container { background: white; padding: 40px; border-radius: 8px; width: 500px; }
+        h2 { text-align: center; margin-bottom: 20px; }
+        .info { background: #f8f9ff; padding: 10px; border-radius: 4px; margin-bottom: 20px; border-left: 4px solid #667eea; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-update { background: #f39c12; color: white; width: 100%; }
+        .btn-cancel { background: #ddd; color: #333; text-decoration: none; display: inline-block; text-align: center; padding: 10px; margin-top: 10px; width: 100%; }
+        .errorlist { color: red; font-size: 12px; list-style: none; padding: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>✏️ Update Teacher</h2>
+        <div class="info">
+            <strong>Editing:</strong> {{ teacher.first_name }} {{ teacher.last_name }} ({{ teacher.teacher_id }})
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-update">🔄 Update</button>
+            <a href="{% url 'teacher_list' %}" class="btn-cancel">✖ Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

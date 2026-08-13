@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - School Management</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="w3-top">
+        <div class="w3-bar w3-blue">
+            <a href="/dashboard/" class="w3-bar-item w3-button w3-hover-light-blue">
+                <i class="fa fa-home"></i> Dashboard
+            </a>
+            <a href="/account/list/" class="w3-bar-item w3-button w3-hover-light-blue">
+                <i class="fa fa-users"></i> Users
+            </a>
+            <a href="/teacher/" class="w3-bar-item w3-button w3-hover-light-blue">
+                <i class="fa fa-user-md"></i> Teachers
+            </a>
+            <a href="/student/" class="w3-bar-item w3-button w3-hover-light-blue">
+                <i class="fa fa-graduation-cap"></i> Students
+            </a>
+            <a href="/admin/" class="w3-bar-item w3-button w3-hover-light-blue">
+                <i class="fa fa-cog"></i> Admin
+            </a>
+            <a href="/logout/" class="w3-bar-item w3-button w3-right w3-hover-red">
+                <i class="fa fa-sign-out"></i> Logout
+            </a>
+            <span class="w3-bar-item w3-right">
+                <i class="fa fa-user"></i> {{ user.username }}
+            </span>
+        </div>
+    </div>
+
+    <div style="margin-top:60px;padding:20px;">
+        <div class="w3-container w3-padding">
+            <div class="w3-card-4 w3-white w3-padding w3-round">
+                <h2><i class="fa fa-dashboard"></i> Dashboard</h2>
+                <hr>
+                
+                <!-- Statistics Cards -->
+                <div class="w3-row-padding w3-margin-top">
+                    <div class="w3-col l3 s6 w3-margin-bottom">
+                        <div class="w3-card w3-blue w3-round w3-padding">
+                            <h3>{{ total_users|default:0 }}</h3>
+                            <p><i class="fa fa-users"></i> Total Users</p>
+                        </div>
+                    </div>
+                    <div class="w3-col l3 s6 w3-margin-bottom">
+                        <div class="w3-card w3-green w3-round w3-padding">
+                            <h3>{{ total_teachers|default:0 }}</h3>
+                            <p><i class="fa fa-user-md"></i> Teachers</p>
+                        </div>
+                    </div>
+                    <div class="w3-col l3 s6 w3-margin-bottom">
+                        <div class="w3-card w3-amber w3-round w3-padding">
+                            <h3>{{ total_students|default:0 }}</h3>
+                            <p><i class="fa fa-graduation-cap"></i> Students</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Records -->
+            <div class="w3-row-padding w3-margin-top">
+                <!-- Recent Users -->
+                <div class="w3-col l4 w3-margin-bottom">
+                    <div class="w3-card-4 w3-white w3-round w3-padding">
+                        <h4><i class="fa fa-users w3-text-blue"></i> Recent Users</h4>
+                        <hr>
+                        {% if recent_users %}
+                            <ul class="w3-ul">
+                                {% for user in recent_users %}
+                                    <li>{{ user.name }} - <span class="w3-tag w3-small w3-blue">{{ user.role }}</span></li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="w3-text-grey">No users found</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Recent Teachers -->
+                <div class="w3-col l4 w3-margin-bottom">
+                    <div class="w3-card-4 w3-white w3-round w3-padding">
+                        <h4><i class="fa fa-user-md w3-text-green"></i> Recent Teachers</h4>
+                        <hr>
+                        {% if recent_teachers %}
+                            <ul class="w3-ul">
+                                {% for teacher in recent_teachers %}
+                                    <li>{{ teacher.first_name }} {{ teacher.last_name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="w3-text-grey">No teachers found</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Recent Students -->
+                <div class="w3-col l4 w3-margin-bottom">
+                    <div class="w3-card-4 w3-white w3-round w3-padding">
+                        <h4><i class="fa fa-graduation-cap w3-text-amber"></i> Recent Students</h4>
+                        <hr>
+                        {% if recent_students %}
+                            <ul class="w3-ul">
+                                {% for student in recent_students %}
+                                    <li>{{ student.first_name }} {{ student.last_name }} - <span class="w3-tag w3-small w3-green">{{ student.class_name }}</span></li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="w3-text-grey">No students found</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Details</title>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 8px; }
+        h2 { text-align: center; margin-bottom: 20px; }
+        .profile { background: #f8f9ff; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
+        .avatar { font-size: 60px; }
+        .detail { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .detail strong { color: #555; }
+        .detail span { color: #333; }
+        .btn { padding: 8px 16px; text-decoration: none; color: white; border-radius: 4px; display: inline-block; }
+        .btn-edit { background: #f39c12; }
+        .btn-delete { background: #e74c3c; }
+        .btn-back { background: #667eea; }
+        .actions { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>👤 Teacher Details</h2>
+        <div class="profile">
+            <div class="avatar">👨‍🏫</div>
+            <h3>{{ teacher.first_name }} {{ teacher.last_name }}</h3>
+            <p style="color: #888;">{{ teacher.teacher_id }}</p>
+        </div>
+        <div class="detail"><strong>Email:</strong> <span>{{ teacher.email }}</span></div>
+        <div class="detail"><strong>Phone:</strong> <span>{{ teacher.phone_number }}</span></div>
+        <div class="detail"><strong>Gender:</strong> <span>{{ teacher.get_gender_display }}</span></div>
+        <div class="detail"><strong>DOB:</strong> <span>{{ teacher.date_of_birth|date:"Y-m-d"|default:"—" }}</span></div>
+        <div class="detail"><strong>Qualification:</strong> <span>{{ teacher.get_qualification_display|default:"—" }}</span></div>
+        <div class="detail"><strong>Specialization:</strong> <span>{{ teacher.specialization|default:"—" }}</span></div>
+        <div class="detail"><strong>Experience:</strong> <span>{{ teacher.experience_years }} years</span></div>
+        <div class="detail"><strong>Joined:</strong> <span>{{ teacher.joining_date|date:"Y-m-d" }}</span></div>
+        <div class="actions">
+            <a href="{% url 'teacher_update' teacher.id %}" class="btn btn-edit">✏️ Edit</a>
+            <a href="{% url 'teacher_delete' teacher.id %}" class="btn btn-delete">🗑️ Delete</a>
+            <a href="{% url 'teacher_list' %}" class="btn btn-back">← Back</a>
+        </div>
+    </div>
+</body>
+</html>

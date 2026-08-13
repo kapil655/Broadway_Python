@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Teacher</title>
+    <style>
+        body { font-family: Arial; background: linear-gradient(135deg, #e74c3c, #c0392b); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .container { background: white; padding: 40px; border-radius: 8px; width: 400px; text-align: center; }
+        h2 { color: #e74c3c; }
+        .warning { background: #fff5f5; padding: 20px; border-radius: 4px; margin: 20px 0; border: 1px solid #fcc; }
+        .details { background: #f8f9fa; padding: 15px; border-radius: 4px; text-align: left; }
+        .details p { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee; }
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-delete { background: #e74c3c; color: white; width: 100%; }
+        .btn-cancel { background: #ddd; color: #333; text-decoration: none; display: inline-block; text-align: center; padding: 10px; margin-top: 10px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🗑️ Delete Teacher</h2>
+        <div class="warning">
+            <strong>⚠️ Are you sure?</strong>
+            <p style="margin-top:5px;">This action cannot be undone!</p>
+        </div>
+        <div class="details">
+            <p><strong>Name:</strong> {{ teacher.first_name }} {{ teacher.last_name }}</p>
+            <p><strong>Teacher ID:</strong> {{ teacher.teacher_id }}</p>
+            <p><strong>Email:</strong> {{ teacher.email }}</p>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-delete">🗑️ Confirm Delete</button>
+            <a href="{% url 'teacher_list' %}" class="btn-cancel">✖ Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

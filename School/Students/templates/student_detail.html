@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="w3-container w3-padding-32">
+        <div class="w3-card-4 w3-white w3-padding" style="max-width:700px;margin:auto;">
+            
+            <div class="w3-center">
+                <h2><i class="fa fa-user-circle"></i> Student Details</h2>
+                <div class="w3-border-bottom w3-border-blue" style="width:60px;margin:10px auto;"></div>
+            </div>
+
+            <!-- Profile Header -->
+            <div class="w3-center w3-padding">
+                <div class="w3-display-container w3-blue w3-round" style="height:120px;">
+                    <div class="w3-display-bottommiddle" style="margin-bottom:-40px;">
+                        <div class="w3-circle w3-white" style="width:80px;height:80px;padding:12px;margin:auto;">
+                            <i class="fa fa-user-graduate" style="font-size:48px;color:#2196F3;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:45px;">
+                    <h3>{{ student.first_name }} {{ student.last_name }}</h3>
+                    <span class="w3-tag w3-blue w3-round">{{ student.student_id }}</span>
+                    <span class="w3-tag w3-green w3-round">
+                        {% if student.is_active %}Active{% else %}Inactive{% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Details -->
+            <div class="w3-row-padding w3-margin-top">
+                <!-- Personal Information -->
+                <div class="w3-col l6 w3-margin-bottom">
+                    <div class="w3-card w3-light-grey w3-round w3-padding">
+                        <h4><i class="fa fa-user w3-text-blue"></i> Personal</h4>
+                        <hr>
+                        <p><strong>Gender:</strong> {{ student.get_gender_display }}</p>
+                        <p><strong>DOB:</strong> {{ student.date_of_birth|date:"Y-m-d"|default:"—" }}</p>
+                        <p><strong>Phone:</strong> {{ student.phone_number }}</p>
+                        <p><strong>Email:</strong> {{ student.email|default:"—" }}</p>
+                    </div>
+                </div>
+
+                <!-- Academic Information -->
+                <div class="w3-col l6 w3-margin-bottom">
+                    <div class="w3-card w3-light-grey w3-round w3-padding">
+                        <h4><i class="fa fa-graduation-cap w3-text-green"></i> Academic</h4>
+                        <hr>
+                        <p><strong>Class:</strong> {{ student.class_name }}</p>
+                        <p><strong>Section:</strong> {{ student.section|default:"—" }}</p>
+                        <p><strong>Roll Number:</strong> {{ student.roll_number }}</p>
+                        <p><strong>Admission:</strong> {{ student.admission_date|date:"Y-m-d" }}</p>
+                    </div>
+                </div>
+
+                <!-- Parent Information -->
+                <div class="w3-col l12 w3-margin-bottom">
+                    <div class="w3-card w3-light-grey w3-round w3-padding">
+                        <h4><i class="fa fa-users w3-text-amber"></i> Parent Information</h4>
+                        <hr>
+                        <div class="w3-row-padding">
+                            <div class="w3-col s6">
+                                <p><strong>Parent Name:</strong> {{ student.parent_name }}</p>
+                            </div>
+                            <div class="w3-col s6">
+                                <p><strong>Parent Phone:</strong> {{ student.parent_phone }}</p>
+                            </div>
+                            <div class="w3-col s12">
+                                <p><strong>Parent Email:</strong> {{ student.parent_email|default:"—" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                {% if student.address %}
+                <div class="w3-col l12">
+                    <div class="w3-card w3-light-grey w3-round w3-padding">
+                        <h4><i class="fa fa-map-marker w3-text-red"></i> Address</h4>
+                        <hr>
+                        <p>{{ student.address }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Actions -->
+            <div class="w3-row w3-margin-top w3-center">
+                <a href="{% url 'student_update' student.id %}" class="w3-btn w3-amber w3-round">
+                    <i class="fa fa-edit"></i> Edit
+                </a>
+                <a href="{% url 'student_delete' student.id %}" class="w3-btn w3-red w3-round">
+                    <i class="fa fa-trash"></i> Delete
+                </a>
+                <a href="{% url 'student_list' %}" class="w3-btn w3-blue w3-round">
+                    <i class="fa fa-arrow-left"></i> Back
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

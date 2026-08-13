@@ -1,42 +1,42 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from .models import User
-from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 @admin.register(User)
-class CustomUserAdmin(UserAdmin):
-    """Custom admin interface for User model"""
-    
-    form = CustomUserChangeForm
-    add_form = CustomUserCreationForm
-    
-    list_display = ('username', 'email', 'first_name', 'last_name', 'role', 
-                   'is_active', 'is_verified', 'date_joined')
-    list_filter = ('role', 'is_active', 'is_verified', 'gender')
-    search_fields = ('username', 'email', 'first_name', 'last_name', 'phone_number')
-    ordering = ('-date_joined',)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ["id", "name", "role", "phone_number", "is_verified", "created_at"]
+    list_display_links = ["id", "name"]
+    list_filter = ["role", "gender", "is_verified"]
+    search_fields = ["name", "phone_number", "address"]
+    list_editable = ["role", "is_verified"]
+    readonly_fields = ["created_at", "updated_at"]
+    ordering = ["-created_at"]
     
     fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        ('Personal Information', {
-            'fields': ('first_name', 'last_name', 'email', 'phone_number', 
-                      'address', 'date_of_birth', 'gender', 'profile_picture')
+        ("Personal Info", {
+            "fields": ("name", "gender", "date_of_birth")
         }),
-        ('Roles and Permissions', {
-            'fields': ('role', 'is_active', 'is_verified', 
-                      'is_staff', 'is_superuser', 'groups', 'user_permissions')
+        ("Contact", {
+            "fields": ("phone_number", "address")
         }),
-        ('Important Dates', {
-            'fields': ('last_login', 'date_joined', 'updated_at')
+        ("Role & Status", {
+            "fields": ("role", "is_verified")
+        }),
+        ("Timestamps", {
+            "fields": ("created_at", "updated_at"),
+            "classes": ("collapse",)
         }),
     )
     
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('username', 'email', 'password1', 'password2', 'role'),
-        }),
-    )
+    actions = ["verify_users", "unverify_users"]
+    
+    @admin.action(description="Verify selected users")
+    def verify_users(self, request, queryset):
+        count = queryset.update(is_verified=True)
+        self.message_user(request, f"{count} users verified.")
+    
+    @admin.action(description="Unverify selected users")
+    def unverify_users(self, request, queryset):
+        count = queryset.update(is_verified=False)
+        self.message_user(request, f"{count} users unverified.")
 
-# Register other models if needed
-# admin.site.register(Profile)
+admin.site.site_header = "School Management"    

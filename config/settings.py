@@ -44,6 +44,9 @@ INSTALLED_APPS = [
 
     #apps
     'School.accounts',
+    'School.Teacher',
+    'School.Students',
+    'School.Subjects'
 ]
 
 MIDDLEWARE = [
