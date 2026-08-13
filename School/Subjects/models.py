@@ -1,5 +1,7 @@
+# subjects/models.py
 from django.db import models
-from School.Teacher.models import Teacher
+from ..Teacher.models import Teacher
+
 
 class Subject(models.Model):
     SUBJECT_TYPES = [
@@ -19,7 +21,7 @@ class Subject(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True, related_name='subjects')
     
     # Class Information
-    class_name = models.CharField(max_length=20) 
+    class_name = models.CharField(max_length=20)
     
     # Academic Details
     credit_hours = models.IntegerField(default=1)

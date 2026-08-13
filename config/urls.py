@@ -22,6 +22,12 @@ urlpatterns = [
     path("account/", include("School.accounts.urls")),
     path("teacher/", include("School.Teacher.urls")),
     path("students/", include("School.Students.urls")),
-    path("subjects/", include("School.subjects.urls")),
+    path("subjects/", include("School.Subjects.urls")),
+    path("students/", include("School.Students.urls")),
 
+    # API links
+    path('api/', include('School.accounts.api.urls')),        # /api/attendance/
+    path("api/teacher/", include("School.Teacher.api.urls")),    # /teacher/
+    path("api/students/", include("School.Students.api.urls")),  # /students/
+    path("api/subjects/", include("School.Subjects.api.urls")),  # /subjects/
 ]

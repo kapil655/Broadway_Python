@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Login</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="w3-container w3-padding-64" style="max-width: 400px; margin: auto;">
+        <div class="w3-card-4 w3-round-large w3-padding-large">
+            <h2 class="w3-center w3-blue w3-padding w3-round">Student Login</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="w3-panel w3-red w3-round">
+                        <p>{{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <label for="student_id">Student ID:</label>
+                <input class="w3-input w3-border w3-round" 
+                       type="text" 
+                       id="student_id" 
+                       name="student_id" 
+                       placeholder="Enter your student ID" 
+                       required>
+
+                <label for="password" style="margin-top: 15px;">Password:</label>
+                <input class="w3-input w3-border w3-round" 
+                       type="password" 
+                       id="password" 
+                       name="password" 
+                       placeholder="Enter your password" 
+                       required>
+
+                <button type="submit" class="w3-btn w3-blue w3-round w3-block w3-margin-top">
+                    <i class="fa fa-sign-in"></i> Login
+                </button>
+            </form>
+            
+            <p class="w3-center w3-margin-top">
+                Don't have an account? 
+                <a href="{% url 'student_register' %}" class="w3-text-blue w3-hover-text-blue">
+                    <i class="fa fa-user-plus"></i> Register Here
+                </a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

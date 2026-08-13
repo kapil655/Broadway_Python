@@ -1,9 +1,8 @@
-
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from django.contrib import messages
 from .models import Student
 from .forms import StudentForm
+
 
 
 class StudentListView(ListView):
@@ -36,3 +35,4 @@ class StudentDetailView(DetailView):
     model = Student
     template_name = "student_detail.html"
     context_object_name = "student"
+

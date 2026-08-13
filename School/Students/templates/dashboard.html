@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="w3-container w3-padding-16">
+        <div class="w3-bar w3-blue w3-round">
+            <a href="#" class="w3-bar-item w3-button">Dashboard</a>
+            <span class="w3-bar-item w3-right">Welcome, {{ student.first_name }} {{ student.last_name }}!</span>
+            <a href="{% url 'student_logout' %}" class="w3-bar-item w3-button w3-right w3-red">
+                <i class="fa fa-sign-out"></i> Logout
+            </a>
+        </div>
+
+        <div class="w3-row-padding w3-margin-top">
+            <div class="w3-col l3 s6 w3-margin-bottom"> 
+                <div class="w3-card w3-green w3-round w3-padding"> 
+                    <h3>{{ total_teachers|default:0 }}</h3> 
+                    <p><i class="fa fa-user-md"></i> Teachers</p> 
+                </div> 
+            </div> 
+            
+            <div class="w3-col l3 s6 w3-margin-bottom"> 
+                <div class="w3-card w3-amber w3-round w3-padding"> 
+                    <h3>{{ total_students|default:0 }}</h3> 
+                    <p><i class="fa fa-graduation-cap"></i> Students</p> 
+                </div> 
+            </div>
+        </div>
+        
+        <div class="w3-card w3-padding w3-margin-top">
+            <h3>Your Information</h3>
+            <p><strong>Student ID:</strong> {{ student.student_id }}</p>
+            <p><strong>Name:</strong> {{ student.first_name }} {{ student.last_name }}</p>
+            <p><strong>Email:</strong> {{ student.email }}</p>
+            <p><strong>Class:</strong> {{ student.class_name }} {{ student.section }}</p>
+            <p><strong>Roll Number:</strong> {{ student.roll_number }}</p>
+        </div>
+    </div>
+</body>
+</html>

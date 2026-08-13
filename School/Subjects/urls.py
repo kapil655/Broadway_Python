@@ -4,13 +4,15 @@ from .views import (
     SubjectCreateView,
     SubjectUpdateView,
     SubjectDeleteView,
-    SubjectDetailView,
+    SubjectDetailView
 )
 
+app_name = 'subjects'
+
 urlpatterns = [
-    path("", SubjectListView.as_view(), name="subject_list"),
-    path("create/", SubjectCreateView.as_view(), name="subject_create"),
-    path("<int:pk>/", SubjectDetailView.as_view(), name="subject_detail"),
-    path("update/<int:pk>/", SubjectUpdateView.as_view(), name="subject_update"),
-    path("delete/<int:pk>/", SubjectDeleteView.as_view(), name="subject_delete"),
+    path('', SubjectListView.as_view(), name='subject_list'),
+    path('create/', SubjectCreateView.as_view(), name='subject_create'),
+    path('<int:pk>/update/', SubjectUpdateView.as_view(), name='subject_update'),
+    path('<int:pk>/delete/', SubjectDeleteView.as_view(), name='subject_delete'),
+    path('<int:pk>/', SubjectDetailView.as_view(), name='subject_detail'),
 ]

@@ -1,44 +1,256 @@
+<!-- subjects/templates/subject_list.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Subject List</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background: #f0f2f5;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #2196F3;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .header h2 {
+            margin: 0;
+            color: #333;
+        }
+        .header h2 i {
+            color: #2196F3;
+            margin-right: 10px;
+        }
+        .badge {
+            background: #2196F3;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .btn-blue {
+            background: #2196F3;
+            color: white;
+        }
+        .btn-blue:hover {
+            background: #1976D2;
+        }
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        .btn-amber {
+            background: #FFC107;
+            color: #333;
+        }
+        .btn-amber:hover {
+            background: #FFB300;
+        }
+        .btn-red {
+            background: #f44336;
+            color: white;
+        }
+        .btn-red:hover {
+            background: #d32f2f;
+        }
+        .btn-green {
+            background: #4CAF50;
+            color: white;
+        }
+        .btn-green:hover {
+            background: #388E3C;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th {
+            background: #2196F3;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        .tag {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .tag-blue { background: #BBDEFB; color: #0D47A1; }
+        .tag-green { background: #C8E6C9; color: #1B5E20; }
+        .tag-orange { background: #FFE0B2; color: #E65100; }
+        .tag-purple { background: #E1BEE7; color: #4A148C; }
+        .tag-active { background: #C8E6C9; color: #1B5E20; }
+        .tag-inactive { background: #FFCDD2; color: #B71C1C; }
+        .code-tag {
+            background: #e0e0e0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .empty-state i {
+            font-size: 60px;
+            color: #ccc;
+        }
+        .empty-state h3 {
+            color: #666;
+        }
+        .empty-state p {
+            color: #999;
+        }
+        .actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        .alert {
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .alert-success {
+            background: #C8E6C9;
+            color: #1B5E20;
+            border-left: 4px solid #4CAF50;
+        }
+        .alert-error {
+            background: #FFCDD2;
+            color: #B71C1C;
+            border-left: 4px solid #f44336;
+        }
+        .footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 13px;
+            flex-wrap: wrap;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .stats span i {
+            color: #2196F3;
+            margin-right: 5px;
+        }
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .header h2 {
+                text-align: center;
+            }
+            .header a {
+                text-align: center;
+            }
+            table {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 6px 8px;
+            }
+            .card {
+                padding: 15px;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            .btn-sm {
+                width: 100%;
+                text-align: center;
+            }
+            .stats {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="w3-container w3-padding-32">
-        <div class="w3-card-4 w3-white w3-padding w3-round">
-            
+    <div class="container">
+        <div class="card">
             <!-- Header -->
-            <div class="w3-row w3-margin-bottom">
-                <div class="w3-col s8">
-                    <h2><i class="fa fa-book"></i> Subjects <span class="w3-tag w3-blue w3-round">{{ subjects|length }}</span></h2>
-                </div>
-                <div class="w3-col s4 w3-right-align">
-                    <a href="{% url 'subject_create' %}" class="w3-btn w3-blue w3-round">
-                        <i class="fa fa-plus"></i> Add Subject
-                    </a>
-                </div>
+            <div class="header">
+                <h2>
+                    <i class="fa fa-book"></i> Subjects
+                    <span class="badge">{{ subjects|length }}</span>
+                </h2>
+                <a href="{% url 'subjects:subject_create' %}" class="btn btn-blue">
+                    <i class="fa fa-plus"></i> Add Subject
+                </a>
             </div>
 
             <!-- Messages -->
             {% if messages %}
                 {% for message in messages %}
-                    <div class="w3-panel w3-green w3-round">
-                        <i class="fa fa-check-circle"></i> {{ message }}
+                    <div class="alert alert-{% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                        <i class="fa {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                        {{ message }}
                     </div>
                 {% endfor %}
             {% endif %}
 
             <!-- Table -->
             {% if subjects %}
-                <div class="w3-responsive">
-                    <table class="w3-table w3-striped w3-bordered w3-hoverable">
+                <div style="overflow-x: auto;">
+                    <table>
                         <thead>
-                            <tr class="w3-blue">
-                                <th>ID</th>
+                            <tr>
+                                <th>#</th>
                                 <th>Code</th>
-                                <th>Subject Name</th>
+                                <th>Subject</th>
                                 <th>Class</th>
                                 <th>Teacher</th>
                                 <th>Type</th>
@@ -49,60 +261,83 @@
                         </thead>
                         <tbody>
                             {% for subject in subjects %}
-                                <tr>
-                                    <td>{{ subject.id }}</td>
-                                    <td><span class="w3-tag w3-blue w3-round">{{ subject.subject_code }}</span></td>
-                                    <td>{{ subject.subject_name }}</td>
-                                    <td>{{ subject.class_name }}</td>
-                                    <td>
-                                        {% if subject.teacher %}
-                                            {{ subject.teacher.first_name }} {{ subject.teacher.last_name }}
-                                        {% else %}
-                                            <span class="w3-text-grey">Not Assigned</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <span class="w3-tag w3-{% if subject.subject_type == 'theory' %}blue{% elif subject.subject_type == 'practical' %}green{% elif subject.subject_type == 'lab' %}orange{% else %}purple{% endif %} w3-round">
-                                            {{ subject.get_subject_type_display }}
-                                        </span>
-                                    </td>
-                                    <td>{{ subject.credit_hours }}</td>
-                                    <td>
-                                        {% if subject.is_active %}
-                                            <span class="w3-tag w3-green w3-round">Active</span>
-                                        {% else %}
-                                            <span class="w3-tag w3-red w3-round">Inactive</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <a href="{% url 'subject_detail' subject.id %}" class="w3-btn w3-blue w3-small w3-round">
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><span class="code-tag">{{ subject.subject_code }}</span></td>
+                                <td><strong>{{ subject.subject_name }}</strong></td>
+                                <td>{{ subject.class_name }}</td>
+                                <td>
+                                    {% if subject.teacher %}
+                                        {{ subject.teacher.first_name }} {{ subject.teacher.last_name }}
+                                    {% else %}
+                                        <span style="color: #999; font-style: italic;">Not assigned</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="tag tag-{% if subject.subject_type == 'theory' %}blue{% elif subject.subject_type == 'practical' %}green{% elif subject.subject_type == 'lab' %}orange{% else %}purple{% endif %}">
+                                        {{ subject.get_subject_type_display }}
+                                    </span>
+                                </td>
+                                <td>{{ subject.credit_hours }}</td>
+                                <td>
+                                    <span class="tag tag-{% if subject.is_active %}active{% else %}inactive{% endif %}">
+                                        <i class="fa {% if subject.is_active %}fa-check-circle{% else %}fa-times-circle{% endif %}"></i>
+                                        {% if subject.is_active %}Active{% else %}Inactive{% endif %}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="actions">
+                                        <a href="{% url 'subjects:subject_detail' subject.id %}" 
+                                           class="btn btn-green btn-sm" title="View">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a href="{% url 'subject_update' subject.id %}" class="w3-btn w3-amber w3-small w3-round">
+                                        <a href="{% url 'subjects:subject_update' subject.id %}" 
+                                           class="btn btn-amber btn-sm" title="Edit">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a href="{% url 'subject_delete' subject.id %}" class="w3-btn w3-red w3-small w3-round" 
-                                           onclick="return confirm('Are you sure you want to delete this subject?')">
+                                        <a href="{% url 'subjects:subject_delete' subject.id %}" 
+                                           class="btn btn-red btn-sm" title="Delete"
+                                           onclick="return confirm('Delete {{ subject.subject_name }}?')">
                                             <i class="fa fa-trash"></i>
                                         </a>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Footer Stats -->
+                <div class="footer">
+                    <div class="stats">
+                        <span><i class="fa fa-book"></i> Total: <strong>{{ subjects|length }}</strong></span>
+                        <span><i class="fa fa-check-circle" style="color:#4CAF50;"></i> Active: <strong>{{ subjects|length }}</strong></span>
+                    </div>
+                    <div>
+                        <i class="fa fa-clock-o"></i> {% now "Y-m-d H:i" %}
+                    </div>
+                </div>
             {% else %}
-                <div class="w3-center w3-padding-64">
-                    <i class="fa fa-book" style="font-size:64px;color:#ccc;"></i>
-                    <h3>No subjects found</h3>
+                <!-- Empty State -->
+                <div class="empty-state">
+                    <i class="fa fa-book"></i>
+                    <h3>No Subjects Found</h3>
                     <p>Start by adding your first subject.</p>
-                    <a href="{% url 'subject_create' %}" class="w3-btn w3-blue w3-round">
-                        <i class="fa fa-plus"></i> Add First Subject
+                    <a href="{% url 'subjects:subject_create' %}" class="btn btn-blue">
+                        <i class="fa fa-plus"></i> Add Subject
                     </a>
                 </div>
             {% endif %}
-            
         </div>
     </div>
+
+    <!-- Only confirmation dialog uses JavaScript -->
+    <script>
+        // Simple confirmation for delete (minimal JS)
+        function confirmDelete(name) {
+            return confirm('Are you sure you want to delete "' + name + '"?');
+        }
+    </script>
 </body>
 </html>
